@@ -15,7 +15,7 @@ export const BottomCards: React.FC<BottomCardsProps> = ({ onOpenBooking, onOpenS
     <section className="relative w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 pt-6 sm:pt-10 pb-12 sm:pb-16">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
         
-        {/* CARD 1: 300+ Clients & Real Stories */}
+        {/* CARD 1: 400+ Clients & Real Stories */}
         <div 
           id="card-client-stats"
           className="group relative rounded-2xl border border-white/25 bg-black/60 hover:bg-black/75 backdrop-blur-2xl hover:border-white/45 transition-all duration-300 p-5 sm:p-6 flex flex-col justify-between min-h-[175px] shadow-2xl shadow-black/50 overflow-hidden"
@@ -23,14 +23,14 @@ export const BottomCards: React.FC<BottomCardsProps> = ({ onOpenBooking, onOpenS
           {/* Subtle top edge glass specular highlight */}
           <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
 
-          {/* Top Row: 300+ and clients text */}
+          {/* Top Row: 400+ and clients text */}
           <div className="flex items-start gap-3.5 relative z-10">
             <span className="font-serif-display text-4xl sm:text-[46px] font-normal tracking-tight text-[#fff0db] leading-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-              300+
+              400+
             </span>
             <div className="flex flex-col text-xs sm:text-[13px] text-zinc-100 font-normal leading-snug pt-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-              <span>клиентов уже</span>
-              <span>улучшили свою жизнь</span>
+              <span>довольных клиентов</span>
+              <span>восстановили здоровье</span>
             </div>
           </div>
 
@@ -43,13 +43,13 @@ export const BottomCards: React.FC<BottomCardsProps> = ({ onOpenBooking, onOpenS
               <BrandLeafIcon className="w-4 h-4" />
             </div>
             <div className="flex flex-col text-xs leading-tight text-zinc-100 group-hover/stories:text-white font-medium">
-              <span>Реальные истории.</span>
-              <span>Настоящие перемены.</span>
+              <span>Отзывы клиентов.</span>
+              <span>Природное восстановление.</span>
             </div>
           </div>
         </div>
 
-        {/* CARD 2: Individual Development Program */}
+        {/* CARD 2: Program Put Zdravlja BO */}
         <div 
           id="card-program-stats"
           className="group relative rounded-2xl border border-white/25 bg-black/60 hover:bg-black/75 backdrop-blur-2xl hover:border-white/45 transition-all duration-300 p-5 sm:p-6 flex flex-col justify-between min-h-[175px] shadow-2xl shadow-black/50 overflow-hidden"
@@ -57,13 +57,13 @@ export const BottomCards: React.FC<BottomCardsProps> = ({ onOpenBooking, onOpenS
           {/* Subtle top edge glass specular highlight */}
           <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
 
-          {/* Top Row: Title + 52% Metric */}
+          {/* Top Row: Title + Metric */}
           <div className="flex items-start justify-between gap-2 relative z-10">
             <h2 className="text-sm sm:text-base font-medium text-white leading-snug max-w-[200px] drop-shadow-[0_1px_6px_rgba(0,0,0,0.9)]">
-              Индивидуальная<br />программа развития
+              Программа «Путь Здоровья»<br />& Очищение Печени BO
             </h2>
             <div className="flex items-center gap-1 text-amber-200 text-xs sm:text-sm font-semibold tracking-wide drop-shadow-[0_1px_6px_rgba(0,0,0,0.9)]">
-              <span>+52%</span>
+              <span>100%</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
             </div>
           </div>
@@ -71,26 +71,26 @@ export const BottomCards: React.FC<BottomCardsProps> = ({ onOpenBooking, onOpenS
           {/* Bottom Row: Explanation & Ascending Gold Chart */}
           <div className="flex items-end justify-between gap-3 mt-4 relative z-10">
             <p className="text-xs text-[#ececf0] font-normal leading-relaxed max-w-[210px] sm:max-w-[230px] drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-              Научные методики и личная поддержка, чтобы ты чувствовал(а) себя увереннее, счастливее и сильнее каждый день.
+              Биотехнологии, фармация и коучинг, объединенные в индивидуальный протокол для стойкого исцеления.
             </p>
 
             {/* Ascending 4-bar chart */}
-            <div className="flex items-end gap-1.5 pb-0.5 flex-shrink-0" aria-label="Growth Chart">
+            <div className="flex items-end gap-1.5 pb-0.5 flex-shrink-0" aria-label="Этапы восстановления">
               <div 
                 className="w-2.5 h-3.5 rounded-[2px] bg-amber-300/80 transition-all duration-500 group-hover:h-4.5 shadow-sm" 
-                title="Этап 1: Диагностика"
+                title="Фаза 1: Анамнез и лабораторные анализы" 
               />
               <div 
                 className="w-2.5 h-6 rounded-[2px] bg-amber-300/90 transition-all duration-500 group-hover:h-7 shadow-sm" 
-                title="Этап 2: Проработка"
+                title="Фаза 2: Очищение печени и кишечника" 
               />
               <div 
                 className="w-2.5 h-9 rounded-[2px] bg-amber-200 transition-all duration-500 group-hover:h-10 shadow-sm" 
-                title="Этап 3: Закрепление"
+                title="Фаза 3: Персонализированный рацион" 
               />
               <div 
                 className="w-2.5 h-13 rounded-[2px] bg-[#fff8ea] transition-all duration-500 group-hover:h-14 shadow-sm" 
-                title="Этап 4: Трансформация (+52%)"
+                title="Фаза 4: Долговечная жизненная сила и иммунитет" 
               />
             </div>
           </div>
@@ -131,7 +131,7 @@ export const BottomCards: React.FC<BottomCardsProps> = ({ onOpenBooking, onOpenS
             {/* Subtle live indicator badge in video */}
             <div className="absolute top-2 left-2 z-10 flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/25 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-              <span className="text-[10px] text-white font-semibold tracking-wider">LIVE</span>
+              <span className="text-[10px] text-white font-semibold tracking-wider">ONLINE</span>
             </div>
           </div>
 
@@ -139,10 +139,10 @@ export const BottomCards: React.FC<BottomCardsProps> = ({ onOpenBooking, onOpenS
           <div className="flex flex-col justify-between h-full py-1 flex-grow relative z-10">
             <div>
               <h2 className="text-xs sm:text-sm font-medium text-white leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-                Поговорите<br />с вашим коучем
+                Онлайн-консультация<br />с Ольгицей
               </h2>
               <p className="text-[11px] sm:text-xs text-[#ececf0] font-normal mt-1.5 leading-tight drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-                Бесплатная 15-минутная консультация
+                Забронируйте время и узнайте решение вашей проблемы
               </p>
             </div>
 
@@ -161,7 +161,7 @@ export const BottomCards: React.FC<BottomCardsProps> = ({ onOpenBooking, onOpenS
                     : 'bg-black/50 text-zinc-300 border-white/20'
                 }`}
                 title={isVideoOn ? "Выключить камеру" : "Включить камеру"}
-                aria-label="Toggle camera"
+                aria-label="Переключить камеру"
               >
                 {isVideoOn ? <Video className="w-3.5 h-3.5" /> : <VideoOff className="w-3.5 h-3.5" />}
               </button>
@@ -179,7 +179,7 @@ export const BottomCards: React.FC<BottomCardsProps> = ({ onOpenBooking, onOpenS
                     : 'bg-black/50 text-zinc-300 border-white/20'
                 }`}
                 title={isMicOn ? "Выключить микрофон" : "Включить микрофон"}
-                aria-label="Toggle microphone"
+                aria-label="Переключить микрофон"
               >
                 {isMicOn ? <Mic className="w-3.5 h-3.5" /> : <MicOff className="w-3.5 h-3.5" />}
               </button>
@@ -189,8 +189,8 @@ export const BottomCards: React.FC<BottomCardsProps> = ({ onOpenBooking, onOpenS
                 id="call-start-consultation"
                 onClick={onOpenBooking}
                 className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#e04f4f] hover:bg-[#eb5a5a] active:scale-95 flex items-center justify-center text-white transition-all border border-white/40 shadow-lg shadow-red-950/50 backdrop-blur-md cursor-pointer"
-                title="Записаться на 15-минутный звонок"
-                aria-label="Start consultation"
+                title="Записаться на консультацию"
+                aria-label="Записаться на консультацию"
               >
                 <PhoneCall className="w-3.5 h-3.5" />
               </button>

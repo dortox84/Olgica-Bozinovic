@@ -1,5 +1,7 @@
 import React from 'react';
 import interiorImg from '../assets/images/can_you_relate_interior_1789292709132.jpg';
+import { Sparkles, ArrowRight } from 'lucide-react';
+import { OLGICA_DATA } from '../data/bozinovicData';
 
 interface CanYouRelateSectionProps {
   onRelateClick?: () => void;
@@ -11,91 +13,96 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
   const painPoints = [
     {
       id: 1,
-      text: 'Хроническая усталость и упадок сил даже после 8 часов сна, когда утренний кофе уже не приносит энергии, а к середине дня накатывает непреодолимая сонливость.',
+      text: 'Хроническая усталость и упадок сил даже после 8 часов сна, когда утренний кофе больше не бодрит, а к середине дня накатывает непреодолимая вялость и туман в голове.',
     },
     {
       id: 2,
-      text: 'Бесконечные диеты, подсчет калорий и строгие ограничения, которые дают лишь кратковременный результат, сменяясь новым срывом, чувством вины и возвратом веса.',
+      text: 'Бесконечные диеты, жесткие ограничения и подсчет калорий, дающие лишь краткий эффект и неизменно ведущие к новому срыву и возврату веса.',
     },
     {
       id: 3,
-      text: 'Гормональные качели, внезапные вспышки раздражительности, тревожность, отечность и резкая тяга к сладкому или углеводам во второй половине дня.',
+      text: 'Постоянное вздутие живота — ощущение тяжести словно на раннем сроке беременности сразу после еды, гормональный дисбаланс, раздражительность и тяга к сладкому.',
     },
     {
       id: 4,
-      text: 'Вздутие живота, дискомфорт и тяжесть после каждого приема пищи, непереносимость привычных продуктов и отсутствие легкости в теле.',
+      text: 'Растерянность перед списком лекарств и добавок, которые лишь маскируют симптомы, пока истинные причины — здоровье печени и микробиоты — остаются без внимания.',
     },
   ];
 
   return (
     <section 
       id="can-you-relate-section"
-      className="relative w-full overflow-hidden bg-white text-stone-800"
+      className="relative w-full min-h-screen lg:h-[100dvh] lg:min-h-[100dvh] lg:max-h-[100dvh] overflow-visible lg:overflow-hidden bg-[#2C6E67] lg:bg-white text-stone-800 flex items-center justify-center snap-start scroll-mt-0"
     >
-      {/* Background Split: Left White (approx 18-20% on desktop) & Right Rich Deep Teal (#2C6E67) */}
+      {/* Background Split: On mobile/tablet, full-bleed #2C6E67 edge-to-edge. On desktop (lg+), Split Left White & Right #2C6E67 */}
       <div className="absolute inset-0 flex" aria-hidden="true">
-        {/* Left vertical white band */}
-        <div className="w-[12%] sm:w-[15%] lg:w-[18%] xl:w-[20%] bg-white h-full flex-shrink-0" />
-        {/* Right deep sea-pine teal backdrop matching the reference image */}
-        <div className="flex-1 bg-[#2C6E67] h-full" />
+        {/* Left vertical white band - hidden on mobile/tablet so green goes edge-to-edge */}
+        <div className="hidden lg:block w-[18%] xl:w-[20%] bg-white h-full flex-shrink-0" />
+        {/* Deep sea-pine teal backdrop */}
+        <div className="w-full lg:flex-1 bg-[#2C6E67] h-full" />
       </div>
 
       {/* Main Content Grid */}
-      <div className="relative z-10 w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-16 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
+      <div className="relative z-10 w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-10 sm:py-14 lg:py-6 h-full flex items-center">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-10 xl:gap-14 items-center">
           
-          {/* Left Column: Rounded Photo straddling the white and teal background seam */}
+          {/* Column 1: Rounded Photo */}
           <div className="lg:col-span-5 xl:col-span-5 flex justify-center lg:justify-start">
             <div 
               id="relate-image-card"
-              className="relative w-full max-w-[420px] sm:max-w-[480px] lg:max-w-none rounded-[32px] sm:rounded-[42px] lg:rounded-[48px] overflow-hidden shadow-2xl shadow-black/35 ring-1 ring-black/10 group transition-transform duration-500 hover:scale-[1.01]"
+              className="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-none rounded-[24px] sm:rounded-[32px] lg:rounded-[40px] overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/20 lg:ring-black/10 group transition-transform duration-500 hover:scale-[1.01]"
             >
-              {/* Warm interior photo matching the clay wall, olive plant & wooden armchair */}
+              {/* Portrait photo */}
               <img
-                src={interiorImg}
-                alt="Уютный теплый интерьер с креслом и оливковым деревом"
-                className="w-full h-[400px] sm:h-[480px] lg:h-[580px] xl:h-[640px] object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                src="https://res.cloudinary.com/l4orv4yo/image/upload/v1789296600/4a71d565-05e6-469b-a690-0ba4ffed9f28_ioaikn.png"
+                alt="Ольгица Божинович"
+                className="w-full h-[280px] xs:h-[320px] sm:h-[380px] lg:h-[66vh] xl:h-[70vh] lg:max-h-[560px] object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />
 
               {/* Gentle warm vignette overlay */}
               <div 
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/10" 
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" 
                 aria-hidden="true" 
               />
             </div>
           </div>
 
-          {/* Right Column: "Can you relate?" Header & 4 Arrow Points (Inside the Teal Zone) */}
-          <div className="lg:col-span-7 xl:col-span-7 text-white lg:pl-4 xl:pl-8">
+          {/* Column 2: "Can you relate?" Header & 4 Arrow Points */}
+          <div className="lg:col-span-7 xl:col-span-7 text-white lg:pl-2 xl:pl-6 flex flex-col justify-center">
             
-            {/* Display Headline: "Can you relate?" exactly as in the user's reference */}
-            <div className="mb-8 sm:mb-10 lg:mb-12">
+            {/* Header with pill tag */}
+            <div className="mb-4 sm:mb-5 lg:mb-5">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-[#D8EFEB] text-[10.5px] sm:text-[11.5px] font-medium uppercase tracking-wider mb-2 sm:mb-2.5">
+                <Sparkles className="w-3 h-3 text-amber-300" />
+                <span>Обо мне &middot; Подход и понимание</span>
+              </div>
+
               <h2 
                 id="can-you-relate-title"
-                className="font-serif-title text-4xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-normal italic tracking-tight text-[#EEF6F4] leading-[1.15]"
+                className="font-serif-title text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] font-normal italic tracking-tight text-white leading-[1.15]"
               >
-                Can you relate?
+                Знакомо ли вам это?
               </h2>
-              <p className="mt-2 text-xs sm:text-sm text-[#B4D7D0] font-light tracking-wide uppercase">
-                Знакомо ли вам это чувство?
+              <p className="mt-1.5 text-sm sm:text-[14.5px] text-[#C1DFD9] font-light tracking-wide">
+                Узнаете ли вы себя в этих трудностях и сигналах тела?
               </p>
             </div>
 
             {/* 4 Pain Points with Horizontal Arrows pointing right */}
-            <div className="space-y-6 sm:space-y-8 lg:space-y-9">
+            <div className="space-y-3 sm:space-y-3.5 lg:space-y-3.5 xl:space-y-4">
               {painPoints.map((point) => (
                 <div 
                   key={point.id} 
-                  className="flex items-start gap-4 sm:gap-6 group"
+                  className="flex items-start gap-3 sm:gap-3.5 group bg-black/10 sm:bg-transparent p-2.5 sm:p-0 rounded-xl sm:rounded-none"
                 >
-                  {/* Sleek horizontal arrow (identical to reference image) */}
-                  <div className="flex-shrink-0 pt-1 sm:pt-1.5 transition-transform duration-300 group-hover:translate-x-1.5">
+                  {/* Sleek horizontal arrow */}
+                  <div className="flex-shrink-0 pt-1 transition-transform duration-300 group-hover:translate-x-1.5">
                     <svg 
-                      className="w-8 sm:w-10 h-3.5 sm:h-4 text-[#C1DFD9] group-hover:text-white transition-colors" 
+                      className="w-6 sm:w-7 lg:w-8 h-3.5 sm:h-3.5 text-[#E0F2EE] group-hover:text-white transition-colors" 
                       viewBox="0 0 40 14" 
                       fill="none" 
                       stroke="currentColor" 
-                      strokeWidth="1.35" 
+                      strokeWidth="1.6" 
                       strokeLinecap="round" 
                       strokeLinejoin="round"
                       aria-hidden="true"
@@ -105,25 +112,26 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
                     </svg>
                   </div>
 
-                  {/* Paragraph text in soft pale seafoam */}
-                  <p className="text-xs sm:text-[13.5px] lg:text-[14.5px] text-[#DCECE8] group-hover:text-white leading-[1.7] font-light tracking-normal transition-colors max-w-xl">
+                  {/* Paragraph text with clear contrast and comfortable line-height */}
+                  <p className="text-[13px] sm:text-[14px] lg:text-[13px] xl:text-[13.5px] text-[#F0F7F5] group-hover:text-white leading-[1.55] sm:leading-[1.6] font-normal tracking-normal transition-colors max-w-xl">
                     {point.text}
                   </p>
                 </div>
               ))}
             </div>
 
-            {/* Optional gentle interactive action */}
+            {/* Action Bar */}
             {onRelateClick && (
-              <div className="mt-10 sm:mt-12 pt-6 border-t border-white/15 flex items-center justify-between">
-                <span className="text-xs sm:text-sm text-[#C4E2DC] font-light">
-                  Вам не нужно справляться с этим в одиночку.
+              <div className="mt-5 sm:mt-6 lg:mt-5 pt-4 sm:pt-4 border-t border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
+                <span className="text-xs sm:text-[13px] text-[#D4ECE6] font-normal leading-relaxed">
+                  Вам не нужно оставаться с этим один на один. Есть естественный путь к стойкому выздоровлению.
                 </span>
                 <button
                   onClick={onRelateClick}
-                  className="rounded-full border border-white/40 hover:border-white bg-white/10 hover:bg-white/20 px-5 sm:px-6 py-2 text-xs sm:text-sm text-white font-medium transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95"
+                  className="self-start sm:self-auto rounded-full border border-white/50 hover:border-white bg-white/15 hover:bg-white/25 active:scale-95 px-5 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm text-white font-medium transition-all duration-200 cursor-pointer shadow-lg hover:scale-105 inline-flex items-center gap-2 flex-shrink-0"
                 >
-                  Узнать решение
+                  <span>Найти решение</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             )}

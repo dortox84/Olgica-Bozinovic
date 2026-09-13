@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, CheckCircle, Send, Sparkles } from 'lucide-react';
 import { OlgicaLogo } from './OlgicaLogo';
+import { OLGICA_DATA } from '../data/bozinovicData';
 
 interface ConfidentalModalProps {
   isOpen: boolean;
@@ -212,48 +213,27 @@ export const ConfidentalModal: React.FC<ConfidentalModalProps> = ({
               Выберите подходящий формат сопровождения для восстановления энергии, иммунитета и природного сияния.
             </p>
 
-            <div className="mt-6 space-y-3">
-              <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 flex items-center justify-between">
-                <div>
-                  <h4 className="text-sm font-semibold text-stone-900">
-                    Экспресс-диагностика
-                  </h4>
-                  <p className="text-xs text-stone-600 font-light mt-0.5">
-                    1 встреча · Анализ дефицитов · Рекомендации
-                  </p>
+            <div className="mt-6 space-y-3 max-h-[50vh] overflow-y-auto pr-1">
+              {OLGICA_DATA.programs.map((program) => (
+                <div key={program.id} className="p-4 rounded-2xl bg-stone-50 hover:bg-amber-50/60 border border-stone-200 transition-colors flex items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[10px] font-semibold text-amber-800 uppercase tracking-wider block">
+                      {program.category}
+                    </span>
+                    <h4 className="text-sm font-semibold text-stone-900 mt-0.5">
+                      {program.title}
+                    </h4>
+                    <p className="text-xs text-stone-600 font-light mt-0.5">
+                      {program.duration} &middot; {program.features[0]}
+                    </p>
+                  </div>
+                  {program.price && (
+                    <span className="text-xs font-semibold text-stone-900 bg-white border border-stone-200 px-3 py-1 rounded-full shadow-xs whitespace-nowrap">
+                      {program.price}
+                    </span>
+                  )}
                 </div>
-                <span className="text-sm font-medium text-amber-900 bg-white/90 border border-amber-200 px-3 py-1 rounded-full shadow-sm">
-                  15 000 ₽
-                </span>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 flex items-center justify-between">
-                <div>
-                  <h4 className="text-sm font-semibold text-stone-900">
-                    Трансформация (1 месяц)
-                  </h4>
-                  <p className="text-xs text-stone-600 font-light mt-0.5">
-                    Полный протокол питания + суплементация + чат
-                  </p>
-                </div>
-                <span className="text-sm font-medium text-stone-900 bg-white border border-stone-200 px-3 py-1 rounded-full shadow-sm">
-                  35 000 ₽
-                </span>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 flex items-center justify-between">
-                <div>
-                  <h4 className="text-sm font-semibold text-stone-900">
-                    Премиум-сопровождение (3 месяца)
-                  </h4>
-                  <p className="text-xs text-stone-600 font-light mt-0.5">
-                    Всестороннее ведение до стабильного результата
-                  </p>
-                </div>
-                <span className="text-sm font-medium text-stone-900 bg-white border border-stone-200 px-3 py-1 rounded-full shadow-sm">
-                  85 000 ₽
-                </span>
-              </div>
+              ))}
             </div>
 
             <button

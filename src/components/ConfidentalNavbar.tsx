@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { OlgicaLogo } from './OlgicaLogo';
 import { Menu, X, Sparkles, BookOpen, ShieldCheck, Mail, Phone, MapPin } from 'lucide-react';
+import { InstagramIcon, TikTokIcon, YouTubeIcon, FacebookIcon } from './SocialIcons';
+import { OLGICA_DATA } from '../data/bozinovicData';
 
 interface ConfidentalNavbarProps {
   onContactClick: () => void;
@@ -14,10 +16,10 @@ export const ConfidentalNavbar: React.FC<ConfidentalNavbarProps> = ({
   const [menuOpen, setMenuOpen] = useState(false);
 
   const menuItems = [
-    { id: 'home', label: 'Главная', icon: Sparkles, desc: 'Начало и приветствие' },
-    { id: 'methods', label: 'Методика', icon: BookOpen, desc: 'Научный подход и баланс' },
-    { id: 'products', label: 'Программы', icon: ShieldCheck, desc: 'Индивидуальное сопровождение' },
-    { id: 'contact', label: 'Контакты', icon: Mail, desc: 'Запись на консультацию' },
+    { id: 'home', label: 'Главная', icon: Sparkles, desc: 'Встань на путь здоровья' },
+    { id: 'methods', label: 'Обо мне & Подход', icon: BookOpen, desc: 'Биотехнологии, фармация и коучинг' },
+    { id: 'products', label: 'Программы Здоровья', icon: ShieldCheck, desc: 'Очищение печени и Путь Здоровья BO' },
+    { id: 'contact', label: 'Контакты & Консультации', icon: Mail, desc: 'Записаться на встречу или задать вопрос' },
   ];
 
   const handleItemClick = (id: string) => {
@@ -54,20 +56,20 @@ export const ConfidentalNavbar: React.FC<ConfidentalNavbarProps> = ({
             <button
               onClick={() => onNavClick('home')}
               className="cursor-pointer group focus:outline-none p-1"
-              aria-label="Логотип Ольгица"
+              aria-label="Ольгица Божинович"
             >
               <OlgicaLogo className="h-8 sm:h-10 lg:h-12 w-auto" />
             </button>
           </div>
 
-          {/* Right Side: Contact pill button in Russian */}
+          {/* Right Side: Contact pill button */}
           <div className="flex items-center justify-end">
             <button
               id="nav-contact-btn"
               onClick={onContactClick}
               className="rounded-full border border-white/40 hover:border-white bg-white/[0.12] hover:bg-white/[0.22] active:scale-95 transition-all duration-200 px-5 sm:px-7 py-1.5 sm:py-2 text-xs sm:text-[13px] lg:text-[14px] text-white font-normal cursor-pointer backdrop-blur-xl shadow-lg shadow-black/25"
             >
-              Контакты
+              Консультация
             </button>
           </div>
         </div>
@@ -133,24 +135,79 @@ export const ConfidentalNavbar: React.FC<ConfidentalNavbarProps> = ({
               </nav>
             </div>
 
-            {/* Drawer Footer Contact Info */}
-            <div className="pt-6 border-t border-stone-200 space-y-3 text-xs text-stone-600">
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-3.5 h-3.5 text-amber-600" />
-                <span className="text-stone-800 font-medium">+7 (999) 123-45-67</span>
+            {/* Drawer Footer Contact Info & Socials */}
+            <div className="pt-6 border-t border-stone-200 space-y-4 text-xs text-stone-600">
+              {/* Social Media Links (moved into menu on mobile/tablet) */}
+              <div>
+                <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block mb-2.5">
+                  Социальные сети
+                </span>
+                <div className="flex items-center gap-2.5">
+                  <a
+                    href={OLGICA_DATA.socials.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    title="Instagram"
+                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-[#E4405F] hover:border-[#E4405F] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
+                  >
+                    <InstagramIcon className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={OLGICA_DATA.socials.tiktok}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="TikTok"
+                    title="TikTok"
+                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-black hover:border-black text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
+                  >
+                    <TikTokIcon className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={OLGICA_DATA.socials.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="YouTube"
+                    title="YouTube"
+                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-[#FF0000] hover:border-[#FF0000] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
+                  >
+                    <YouTubeIcon className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={OLGICA_DATA.socials.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                    title="Facebook"
+                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-[#1877F2] hover:border-[#1877F2] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
+                  >
+                    <FacebookIcon className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
-              <div className="flex items-center gap-2.5">
-                <MapPin className="w-3.5 h-3.5 text-amber-600" />
-                <span className="text-stone-700">Москва · Онлайн по всему миру</span>
+
+              <div className="space-y-2.5 pt-2 border-t border-stone-150">
+                <a 
+                  href={`tel:${OLGICA_DATA.phone}`}
+                  className="flex items-center gap-2.5 text-stone-800 hover:text-amber-800 transition-colors font-medium"
+                >
+                  <Phone className="w-3.5 h-3.5 text-amber-600" />
+                  <span>{OLGICA_DATA.displayPhone}</span>
+                </a>
+                <div className="flex items-center gap-2.5">
+                  <MapPin className="w-3.5 h-3.5 text-amber-600" />
+                  <span className="text-stone-700">Белград, Сербия · Онлайн-консультации</span>
+                </div>
               </div>
+
               <button
                 onClick={() => {
                   setMenuOpen(false);
                   onContactClick();
                 }}
-                className="w-full mt-4 rounded-full border border-stone-900 bg-stone-900 hover:bg-stone-800 py-3 text-xs text-white font-medium transition-all shadow-md hover:shadow-lg cursor-pointer"
+                className="w-full mt-3 rounded-full border border-stone-900 bg-stone-900 hover:bg-stone-800 py-3 text-xs text-white font-medium transition-all shadow-md hover:shadow-lg cursor-pointer"
               >
-                Записаться на сессию
+                Записаться на консультацию
               </button>
             </div>
 

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useScroll, useTransform, motion } from 'motion/react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, ChevronDown } from 'lucide-react';
 
 interface QuoteScrollSectionProps {
   onExploreClick?: () => void;
@@ -40,8 +40,8 @@ export const QuoteScrollSection: React.FC<QuoteScrollSectionProps> = () => {
 
   // Meaningful, resonant quote regarding health, nutrition and inner transformation
   const quoteText =
-    "«Истинное здоровье и сияние начинаются не с ограничений, а с глубокого понимания своего тела, бережного восстановления баланса и любви к каждому дню.»";
-  const author = "Ольгица Божинович — эксперт интегративной нутрициологии";
+    "„Мой дар — бережно вести тебя по пути исцеления. Истинное здоровье начинается тогда, когда ты выбираешь себя и даешь телу природную поддержку.”";
+  const author = "Ольгица Божинович — Консультант по питанию и нутрициологии, Health Coach";
 
   const words = quoteText.split(' ');
 
@@ -68,7 +68,7 @@ export const QuoteScrollSection: React.FC<QuoteScrollSectionProps> = () => {
         <div className="relative z-10 flex items-center gap-2 pt-2 sm:pt-4">
           <Sparkles className="w-3.5 h-3.5 text-amber-600" />
           <span className="text-[11px] sm:text-xs tracking-[0.2em] uppercase font-medium text-stone-500">
-            Философия преображения
+            Философия здоровья &middot; bozinovicolgica.rs
           </span>
         </div>
 
@@ -100,12 +100,21 @@ export const QuoteScrollSection: React.FC<QuoteScrollSectionProps> = () => {
           </motion.div>
         </div>
 
-        {/* Bottom indicator that fades out as user reaches end */}
+        {/* Bottom indicator that fades out as user reaches end or can be clicked to smoothly jump to Can you relate */}
         <div className="relative z-10 pb-2">
-          <div className="flex items-center gap-2 text-stone-400 text-[11px] uppercase tracking-widest">
+          <button
+            onClick={() => {
+              const el = document.getElementById('can-you-relate-section');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+            className="flex items-center gap-2 text-stone-500 hover:text-stone-900 transition-colors text-[11px] uppercase tracking-widest cursor-pointer group"
+          >
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-            <span>Прокрутите вниз</span>
-          </div>
+            <span>Листайте вниз &middot; Знакомо ли вам это?</span>
+            <ChevronDown className="w-3.5 h-3.5 text-amber-600 group-hover:translate-y-0.5 transition-transform" />
+          </button>
         </div>
 
       </div>

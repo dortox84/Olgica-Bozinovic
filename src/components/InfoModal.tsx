@@ -1,6 +1,7 @@
 import React from 'react';
-import { X, Sparkles, Check, ArrowRight } from 'lucide-react';
+import { X, Sparkles, Check, ArrowRight, Phone, Instagram, FileText, ExternalLink } from 'lucide-react';
 import { BrandLeafIcon } from './CustomIcons';
+import { OLGICA_DATA } from '../data/bozinovicData';
 
 interface InfoModalProps {
   isOpen: boolean;
@@ -22,69 +23,78 @@ export const InfoModal: React.FC<InfoModalProps> = ({
     { title: string; subtitle: string; body: React.ReactNode }
   > = {
     about: {
-      title: 'О философии и подходе',
-      subtitle: 'Индивидуальные программы здоровья и питания',
+      title: 'Обо мне и моем подходе',
+      subtitle: OLGICA_DATA.tagline,
       body: (
         <div className="space-y-4 text-xs sm:text-sm text-stone-700 leading-relaxed font-normal">
-          <p>
-            Мы объединяем передовые научные достижения биохимии питания, лабораторной диагностики и персонального сопровождения.
-          </p>
-          <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200">
-            <h4 className="font-semibold text-stone-900 mb-1 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-amber-600" />
-              Принцип целостности
-            </h4>
-            <p className="text-xs text-stone-600">
-              Каждый организм неповторим. Мы не используем типовые диеты — каждый протокол составляется на основе анамнеза, анализов и индивидуального ритма жизни.
-            </p>
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200">
+            <img 
+              src={OLGICA_DATA.photos.profileSquare} 
+              alt={OLGICA_DATA.name}
+              className="w-16 h-16 rounded-xl object-cover border border-amber-300 flex-shrink-0 shadow-sm" 
+            />
+            <div>
+              <h4 className="font-semibold text-stone-900 text-sm">{OLGICA_DATA.name}</h4>
+              <p className="text-xs text-amber-800 mt-0.5">{OLGICA_DATA.bio.headline}</p>
+            </div>
           </div>
-          <p>
-            Наша цель — восстановить природный запас энергии, улучшить метаболизм и подарить ощущение легкости и уверенности в каждом дне.
-          </p>
+
+          {OLGICA_DATA.bio.paragraphs.map((p, i) => (
+            <p key={i} className="text-stone-700">
+              {p}
+            </p>
+          ))}
+
+          <div className="p-3.5 rounded-xl bg-stone-100 border border-stone-200 text-xs text-stone-700">
+            <span className="font-semibold text-stone-900 block mb-1">Девиз:</span>
+            <em>„{OLGICA_DATA.motto}”</em> — {OLGICA_DATA.subMotto}
+          </div>
         </div>
       ),
     },
     services: {
-      title: 'Программы и форматы',
-      subtitle: 'Выберите оптимальное направление оздоровления',
+      title: 'Программы оздоровления',
+      subtitle: 'Найдите подходящую программу и начните путь к преображению',
       body: (
-        <div className="space-y-3">
-          {[
-            {
-              name: 'Комплексный чекап и нутрициологический протокол',
-              dur: '2 недели',
-              desc: 'Глубокий анализ микроэлементов, детокс-поддержка, персональный план питания.',
-            },
-            {
-              name: 'Трансформация пищевых привычек',
-              dur: '1 месяц',
-              desc: 'Ежедневная обратная связь, меню на каждый день, подбор сертифицированных нутрицевтиков.',
-            },
-            {
-              name: 'VIP-сопровождение «Новая Энергия»',
-              dur: '3 месяца',
-              desc: 'Полное ведение до стойкого результата, коррекция анализов в динамике, связь 24/7.',
-            },
-          ].map((item, idx) => (
+        <div className="space-y-3.5">
+          {OLGICA_DATA.programs.map((item) => (
             <div
-              key={idx}
-              onClick={() => onSelectService && onSelectService(item.name)}
-              className="p-3.5 rounded-xl border border-stone-200 bg-stone-50 hover:bg-amber-50/60 hover:border-amber-300 transition-all cursor-pointer group"
+              key={item.id}
+              onClick={() => onSelectService && onSelectService(item.title)}
+              className="p-4 rounded-xl border border-stone-200 bg-stone-50/90 hover:bg-amber-50/60 hover:border-amber-300 transition-all cursor-pointer group"
             >
-              <div className="flex items-center justify-between">
-                <h4 className="text-xs sm:text-sm font-semibold text-stone-900 group-hover:text-amber-900">
-                  {item.name}
-                </h4>
-                <span className="text-[11px] text-amber-700 font-medium px-2 py-0.5 rounded-full bg-amber-100/80">
-                  {item.dur}
-                </span>
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <span className="text-[10px] uppercase tracking-wider font-semibold text-amber-800">
+                    {item.category}
+                  </span>
+                  <h4 className="text-sm font-semibold text-stone-900 group-hover:text-amber-900 mt-0.5">
+                    {item.title}
+                  </h4>
+                </div>
+                {item.price && (
+                  <span className="text-xs font-semibold text-stone-900 px-2.5 py-1 rounded-full bg-white border border-stone-200 shadow-xs whitespace-nowrap">
+                    {item.price}
+                  </span>
+                )}
               </div>
-              <p className="text-xs text-stone-600 mt-1">
-                {item.desc}
+              <p className="text-xs text-stone-600 mt-1.5 leading-relaxed">
+                {item.description}
               </p>
-              <div className="mt-2 flex items-center gap-1 text-[11px] text-amber-700 font-medium group-hover:translate-x-1 transition-transform">
-                <span>Выбрать программу</span>
-                <ArrowRight className="w-3 h-3" />
+              <ul className="mt-2.5 space-y-1 text-xs text-stone-700">
+                {item.features.map((feat, fIdx) => (
+                  <li key={fIdx} className="flex items-center gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-3 flex items-center justify-between pt-2 border-t border-stone-200/60 text-xs">
+                <span className="text-stone-500 font-light">{item.duration}</span>
+                <span className="inline-flex items-center gap-1 text-amber-700 font-medium group-hover:translate-x-1 transition-transform">
+                  <span>Выбрать эту программу</span>
+                  <ArrowRight className="w-3 h-3" />
+                </span>
               </div>
             </div>
           ))}
@@ -92,59 +102,84 @@ export const InfoModal: React.FC<InfoModalProps> = ({
       ),
     },
     results: {
-      title: 'Истории преображения',
-      subtitle: 'Реальные результаты наших клиентов',
+      title: 'Отзывы и благодарности',
+      subtitle: 'Реальный опыт клиентов с сайта bozinovicolgica.rs',
       body: (
-        <div className="space-y-3">
-          {[
-            {
-              client: 'Екатерина В., 34 года',
-              res: 'Нормализация сна, снижение веса на 6 кг за 6 недель, устранение хронической усталости.',
-            },
-            {
-              client: 'Михаил С., 42 года',
-              res: 'Снижение уровня системного воспаления, повышение выносливости и нормализация липидного профиля.',
-            },
-            {
-              client: 'Ольга К., 29 лет',
-              res: 'Очищение кожи, восстановление баланса железа и витамина D, ощущение легкости и прилива сил.',
-            },
-          ].map((res, i) => (
-            <div key={i} className="p-3.5 rounded-xl border border-stone-200 bg-stone-50">
-              <div className="flex items-center gap-2 mb-1">
-                <Check className="w-4 h-4 text-emerald-600" />
+        <div className="space-y-3.5">
+          {OLGICA_DATA.testimonials.map((t) => (
+            <div key={t.id} className="p-4 rounded-xl border border-stone-200 bg-stone-50/90 shadow-2xs">
+              <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-stone-900">
-                  {res.client}
+                  {t.author} {t.location ? `· ${t.location}` : ''}
                 </span>
+                <div className="flex items-center gap-0.5 text-amber-500">
+                  {'★'.repeat(5)}
+                </div>
               </div>
-              <p className="text-xs text-stone-600 pl-6">
-                {res.res}
+              <p className="text-xs text-stone-700 italic leading-relaxed">
+                „{t.quote}”
               </p>
+              {t.highlight && (
+                <div className="mt-2 text-[11px] font-medium text-amber-800 bg-amber-100/60 px-2 py-0.5 rounded-md inline-block">
+                  ✓ {t.highlight}
+                </div>
+              )}
             </div>
           ))}
         </div>
       ),
     },
     contact: {
-      title: 'Свяжитесь с нами',
-      subtitle: 'Мы всегда рады ответить на ваши вопросы',
+      title: 'Записаться на консультацию & Контакты',
+      subtitle: 'Уделив время индивидуальной беседе, мы вместе найдем стойкое решение',
       body: (
         <div className="space-y-4 text-xs sm:text-sm text-stone-700">
           <p>
-            Запишитесь на вводную 20-минутную сессию или напишите нам удобным способом:
+            Опишите мне вашу проблему со здоровьем, чтобы мы составили персональный протокол питания и суплементации, подходящий именно вам:
           </p>
-          <div className="space-y-2 text-stone-900 font-medium">
-            <div className="p-3 rounded-xl bg-stone-50 border border-stone-200 flex justify-between items-center">
-              <span>Телефон:</span>
-              <span className="text-amber-800">+7 (999) 123-45-67</span>
-            </div>
-            <div className="p-3 rounded-xl bg-stone-50 border border-stone-200 flex justify-between items-center">
-              <span>Telegram:</span>
-              <span className="text-amber-800">@olgica_health</span>
-            </div>
-            <div className="p-3 rounded-xl bg-stone-50 border border-stone-200 flex justify-between items-center">
-              <span>Прием:</span>
-              <span>Пн – Сб: 10:00 – 20:00</span>
+          <div className="space-y-2.5 text-stone-900 font-medium">
+            <a 
+              href={`tel:${OLGICA_DATA.phone}`} 
+              className="p-3.5 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 flex justify-between items-center transition-colors group"
+            >
+              <span className="flex items-center gap-2 text-stone-700">
+                <Phone className="w-4 h-4 text-amber-600" />
+                <span>Телефон / Звонок:</span>
+              </span>
+              <span className="text-amber-800 group-hover:underline font-semibold">{OLGICA_DATA.displayPhone}</span>
+            </a>
+
+            <a 
+              href={OLGICA_DATA.socials.instagram} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-3.5 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 flex justify-between items-center transition-colors group"
+            >
+              <span className="flex items-center gap-2 text-stone-700">
+                <Instagram className="w-4 h-4 text-amber-600" />
+                <span>Instagram:</span>
+              </span>
+              <span className="text-amber-800 group-hover:underline">{OLGICA_DATA.socials.instagramHandle}</span>
+            </a>
+
+            <a 
+              href={OLGICA_DATA.socials.healthSurveyForm} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-3.5 rounded-xl bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-200 flex justify-between items-center transition-colors group"
+            >
+              <span className="flex items-center gap-2 text-emerald-900">
+                <FileText className="w-4 h-4 text-emerald-700" />
+                <span>Анкета состояния здоровья:</span>
+              </span>
+              <span className="text-emerald-800 font-semibold inline-flex items-center gap-1">
+                Заполнить анкету <ExternalLink className="w-3 h-3" />
+              </span>
+            </a>
+
+            <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200 flex justify-between items-center">
+              <span>Консультации:</span>
+              <span className="text-stone-700">Онлайн по видеосвязи</span>
             </div>
           </div>
         </div>
@@ -167,15 +202,15 @@ export const InfoModal: React.FC<InfoModalProps> = ({
           id="close-info-modal"
           onClick={onClose}
           className="absolute top-5 right-5 p-2 rounded-full text-stone-500 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 border border-stone-200 transition-colors cursor-pointer"
-          aria-label="Close"
+          aria-label="Закрыть"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
         <div className="flex items-center gap-2 mb-2">
           <BrandLeafIcon className="w-5 h-5 text-amber-600" />
           <span className="text-xs uppercase tracking-wider text-amber-700 font-semibold">
-            Путь к себе
+            Встань на путь здоровья
           </span>
         </div>
 
@@ -190,7 +225,16 @@ export const InfoModal: React.FC<InfoModalProps> = ({
           {current.body}
         </div>
 
-        <div className="mt-6 pt-4 border-t border-stone-200 flex justify-end">
+        <div className="mt-6 pt-4 border-t border-stone-200 flex justify-between items-center">
+          <a
+            href={OLGICA_DATA.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-stone-500 hover:text-stone-900 inline-flex items-center gap-1"
+          >
+            <span>bozinovicolgica.rs</span>
+            <ExternalLink className="w-3 h-3" />
+          </a>
           <button
             onClick={onClose}
             className="px-5 py-2 rounded-full border border-stone-900 bg-stone-900 hover:bg-stone-800 text-white text-xs font-medium transition-all shadow-md cursor-pointer"

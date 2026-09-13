@@ -9,6 +9,7 @@ import { ConfidentalHero } from './components/ConfidentalHero';
 import { ConfidentalModal } from './components/ConfidentalModal';
 import { QuoteScrollSection } from './components/QuoteScrollSection';
 import { CanYouRelateSection } from './components/CanYouRelateSection';
+import { ImpactResultsSection } from './components/ImpactResultsSection';
 
 const HERO_BG_URL = 'https://res.cloudinary.com/l4orv4yo/image/upload/v1789260118/1e583dcc-88ab-40e0-a51b-9a7ca95b2ac6_tzzqd3.png';
 
@@ -38,7 +39,7 @@ export default function App() {
     if (section === 'methods' || section === 'research') {
       const el = document.getElementById('can-you-relate-section');
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
     }
@@ -102,9 +103,14 @@ export default function App() {
       {/* 2. White Sticky Quote Section with Word-by-Word Scroll Reveal */}
       <QuoteScrollSection />
 
-      {/* 3. Next Section: "Can you relate?" matching the exact reference image */}
+      {/* 3. Next Section: "Can you relate?" matching the reference image */}
       <CanYouRelateSection 
         onRelateClick={handleOpenProducts}
+      />
+
+      {/* 4. Our Impact & Testimonials with 20.500+ Instagram Followers & Progress Bars */}
+      <ImpactResultsSection 
+        onStoryClick={() => handleOpenSection('results')}
       />
 
       {/* Interactive Modal System */}
