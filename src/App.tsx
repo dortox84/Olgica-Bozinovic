@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import { ConfidentalNavbar } from './components/ConfidentalNavbar';
 import { ConfidentalHero } from './components/ConfidentalHero';
 import { ConfidentalModal } from './components/ConfidentalModal';
+import { QuoteScrollSection } from './components/QuoteScrollSection';
+import { CanYouRelateSection } from './components/CanYouRelateSection';
 
 const HERO_BG_URL = 'https://res.cloudinary.com/l4orv4yo/image/upload/v1789260118/1e583dcc-88ab-40e0-a51b-9a7ca95b2ac6_tzzqd3.png';
 
@@ -33,6 +35,13 @@ export default function App() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
+    if (section === 'methods' || section === 'research') {
+      const el = document.getElementById('can-you-relate-section');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
     if (section === 'contact') {
       handleOpenContact();
       return;
@@ -45,46 +54,58 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d0c0b] text-white flex flex-col justify-between selection:bg-amber-500/20 selection:text-white relative overflow-hidden">
+    <div className="min-h-screen bg-[#0d0c0b] text-white flex flex-col selection:bg-amber-500/20 selection:text-white relative">
       
-      {/* Background Hero Photography Layer */}
-      <div 
-        id="hero-background-layer"
-        className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        <img
-          src={HERO_BG_URL}
-          alt="Confidental - Radiant Smile with Sunlight"
-          referrerPolicy="no-referrer"
-          className="w-full h-full object-cover object-[center_20%] lg:object-center scale-[1.02] transition-transform duration-1000"
+      {/* 1. First Screen: Hero Section */}
+      <div className="relative min-h-screen flex flex-col justify-between overflow-hidden">
+        
+        {/* Background Hero Photography Layer */}
+        <div 
+          id="hero-background-layer"
+          className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
+          aria-hidden="true"
+        >
+          <img
+            src={HERO_BG_URL}
+            alt="Confidental - Radiant Smile with Sunlight"
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover object-[center_20%] lg:object-center scale-[1.02] transition-transform duration-1000"
+          />
+
+          {/* Ambient Dark Gradients matching the design */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-black/10" />
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0d0c0b]/90 via-[#0d0c0b]/40 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent" />
+        </div>
+
+        {/* Subtle Warm Amber Glow in Top Right */}
+        <div 
+          className="pointer-events-none absolute -top-24 -right-24 w-[600px] h-[600px] bg-amber-400/[0.06] rounded-full blur-[140px] z-0"
+          aria-hidden="true"
         />
 
-        {/* Ambient Dark Gradients matching the design: dark on left for card contrast, dark on bottom for typography, clear in center-right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-black/10" />
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0d0c0b]/90 via-[#0d0c0b]/40 to-transparent" />
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent" />
+        {/* Top Header Navbar */}
+        <ConfidentalNavbar 
+          onContactClick={handleOpenContact}
+          onNavClick={handleOpenSection}
+        />
+
+        {/* Hero Body Content */}
+        <main className="relative z-10 flex-grow flex flex-col justify-between">
+          <ConfidentalHero 
+            onExploreProducts={handleOpenProducts}
+            onTickerClick={() => handleOpenSection('research')}
+          />
+        </main>
       </div>
 
-      {/* Subtle Warm Amber Glow in Top Right for cinematic backlighting */}
-      <div 
-        className="pointer-events-none absolute -top-24 -right-24 w-[600px] h-[600px] bg-amber-400/[0.06] rounded-full blur-[140px] z-0"
-        aria-hidden="true"
-      />
+      {/* 2. White Sticky Quote Section with Word-by-Word Scroll Reveal */}
+      <QuoteScrollSection />
 
-      {/* Top Header Navbar */}
-      <ConfidentalNavbar 
-        onContactClick={handleOpenContact}
-        onNavClick={handleOpenSection}
+      {/* 3. Next Section: "Can you relate?" matching the exact reference image */}
+      <CanYouRelateSection 
+        onRelateClick={handleOpenProducts}
       />
-
-      {/* Hero Body Content */}
-      <main className="relative z-10 flex-grow flex flex-col justify-between">
-        <ConfidentalHero 
-          onExploreProducts={handleOpenProducts}
-          onTickerClick={() => handleOpenSection('research')}
-        />
-      </main>
 
       {/* Interactive Modal System */}
       <ConfidentalModal 
