@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronRight, ArrowRight, Star } from 'lucide-react';
-import { InstagramIcon, TikTokIcon, YouTubeIcon, FacebookIcon } from './SocialIcons';
+import { InstagramIcon, TikTokIcon, OKIcon, TelegramIcon } from './SocialIcons';
 import { OLGICA_DATA } from '../data/bozinovicData';
 
 interface ConfidentalHeroProps {
@@ -26,16 +26,16 @@ export const ConfidentalHero: React.FC<ConfidentalHeroProps> = ({
       hoverColor: 'hover:text-[#00f2fe] hover:border-[#00f2fe]/60 hover:bg-[#00f2fe]/20 hover:shadow-[0_0_15px_rgba(0,242,254,0.4)]' 
     },
     { 
-      name: 'YouTube', 
-      href: OLGICA_DATA.socials.youtube, 
-      icon: YouTubeIcon, 
-      hoverColor: 'hover:text-[#FF0000] hover:border-[#FF0000]/60 hover:bg-[#FF0000]/20 hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]' 
+      name: 'Одноклассники', 
+      href: OLGICA_DATA.socials.odnoklassniki, 
+      icon: OKIcon, 
+      hoverColor: 'hover:text-[#EE8208] hover:border-[#EE8208]/60 hover:bg-[#EE8208]/20 hover:shadow-[0_0_15px_rgba(238,130,8,0.4)]' 
     },
     { 
-      name: 'Facebook', 
-      href: OLGICA_DATA.socials.facebook, 
-      icon: FacebookIcon, 
-      hoverColor: 'hover:text-[#1877F2] hover:border-[#1877F2]/60 hover:bg-[#1877F2]/20 hover:shadow-[0_0_15px_rgba(24,119,242,0.4)]' 
+      name: 'Telegram', 
+      href: OLGICA_DATA.socials.telegram, 
+      icon: TelegramIcon, 
+      hoverColor: 'hover:text-[#2AABEE] hover:border-[#2AABEE]/60 hover:bg-[#2AABEE]/20 hover:shadow-[0_0_15px_rgba(42,171,238,0.4)]' 
     },
   ];
 

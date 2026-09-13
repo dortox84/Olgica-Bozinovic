@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { OlgicaLogo } from './OlgicaLogo';
 import { Menu, X, Sparkles, BookOpen, ShieldCheck, Mail, Phone, MapPin } from 'lucide-react';
-import { InstagramIcon, TikTokIcon, YouTubeIcon, FacebookIcon } from './SocialIcons';
+import { InstagramIcon, TikTokIcon, OKIcon, TelegramIcon } from './SocialIcons';
 import { OLGICA_DATA } from '../data/bozinovicData';
 
 interface ConfidentalNavbarProps {
@@ -164,24 +164,24 @@ export const ConfidentalNavbar: React.FC<ConfidentalNavbarProps> = ({
                     <TikTokIcon className="w-4 h-4" />
                   </a>
                   <a
-                    href={OLGICA_DATA.socials.youtube}
+                    href={OLGICA_DATA.socials.odnoklassniki}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="YouTube"
-                    title="YouTube"
-                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-[#FF0000] hover:border-[#FF0000] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
+                    aria-label="Одноклассники"
+                    title="Одноклассники"
+                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-[#EE8208] hover:border-[#EE8208] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
                   >
-                    <YouTubeIcon className="w-4 h-4" />
+                    <OKIcon className="w-4 h-4" />
                   </a>
                   <a
-                    href={OLGICA_DATA.socials.facebook}
+                    href={OLGICA_DATA.socials.telegram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="Facebook"
-                    title="Facebook"
-                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-[#1877F2] hover:border-[#1877F2] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
+                    aria-label="Telegram"
+                    title="Telegram"
+                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-[#2AABEE] hover:border-[#2AABEE] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
                   >
-                    <FacebookIcon className="w-4 h-4" />
+                    <TelegramIcon className="w-4 h-4" />
                   </a>
                 </div>
               </div>
