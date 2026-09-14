@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRight, ArrowRight, Star } from 'lucide-react';
+import { ChevronRight, ArrowRight } from 'lucide-react';
 import { InstagramIcon, TikTokIcon, OKIcon, TelegramIcon } from './SocialIcons';
 import { OLGICA_DATA } from '../data/bozinovicData';
 
@@ -49,8 +49,8 @@ export const ConfidentalHero: React.FC<ConfidentalHeroProps> = ({
           {/* Mobile & Tablet Combined Bottom Stack / Desktop Left Column */}
           <div className="order-2 lg:order-1 flex-shrink-0 w-full lg:w-auto flex flex-col justify-start mt-auto lg:mt-0 pt-2 lg:pt-0">
             
-            {/* Mobile & Tablet ONLY: Compact H1 and Satisfied Clients placed right above "Здоровье & Питание" */}
-            <div className="flex lg:hidden flex-col items-start mb-2 sm:mb-3">
+            {/* Mobile & Tablet ONLY: Compact H1 and Subtitle paragraph placed right above "Здоровье & Питание" */}
+            <div className="flex lg:hidden flex-col items-start mb-3 sm:mb-4">
               <h1 
                 id="hero-display-title-mobile"
                 className="font-display text-[22px] sm:text-[26px] font-normal leading-tight tracking-[-0.02em] text-white select-none drop-shadow-[0_2px_15px_rgba(0,0,0,0.85)]"
@@ -58,44 +58,13 @@ export const ConfidentalHero: React.FC<ConfidentalHeroProps> = ({
                 Встань на путь здоровья
               </h1>
 
-              {/* Ultra-compact Social Proof Pill on mobile/tablet */}
-              <div 
-                id="hero-ratings-badge-mobile"
-                className="mt-1.5 inline-flex items-center gap-2 bg-white/[0.12] backdrop-blur-xl border border-white/20 rounded-full py-0.5 px-2.5 shadow-md shadow-black/30"
+              {/* Subtitle Paragraph on mobile/tablet */}
+              <p 
+                id="hero-subtitle-mobile"
+                className="mt-1.5 text-xs sm:text-sm text-white/90 font-light leading-relaxed max-w-[340px] drop-shadow-[0_1px_8px_rgba(0,0,0,0.7)]"
               >
-                {/* Stacked Client Photo Avatars */}
-                <div className="flex items-center -space-x-1">
-                  <img
-                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80"
-                    alt="Клиент"
-                    className="w-4 h-4 rounded-full border border-black/60 object-cover"
-                  />
-                  <img
-                    src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&h=80&q=80"
-                    alt="Клиент"
-                    className="w-4 h-4 rounded-full border border-black/60 object-cover"
-                  />
-                  <div className="w-4 h-4 rounded-full border border-black/60 bg-amber-400 text-black text-[7.5px] font-bold flex items-center justify-center">
-                    +400
-                  </div>
-                </div>
-
-                <div className="w-[1px] h-2.5 bg-white/30" />
-
-                {/* Stars & Rating */}
-                <div className="flex items-center gap-1">
-                  <div className="flex items-center text-amber-400">
-                    <Star className="w-2.5 h-2.5 fill-amber-400 stroke-amber-400" />
-                  </div>
-                  <span className="text-[10px] font-semibold text-white">
-                    5.0
-                  </span>
-                  <span className="text-white/40 text-[9px]">·</span>
-                  <span className="text-[9px] text-white/90 font-medium">
-                    Сотни довольных клиентов
-                  </span>
-                </div>
-              </div>
+                Авторские программы оздоровления, комплексное очищение организма и гармония с собственным телом.
+              </p>
             </div>
 
             {/* Frosted Glass Card: "Здоровье & Питание" */}
@@ -161,51 +130,13 @@ export const ConfidentalHero: React.FC<ConfidentalHeroProps> = ({
               здоровья
             </h1>
 
-            {/* Google Ratings & Client Avatars Social Proof Pill */}
-            <div 
-              id="hero-ratings-badge"
-              className="mt-5 inline-flex items-center gap-3 bg-white/[0.12] hover:bg-white/[0.18] backdrop-blur-xl border border-white/25 hover:border-white/40 rounded-full py-1.5 px-3.5 shadow-lg shadow-black/30 transition-all duration-300"
+            {/* Inspiring Subtitle Paragraph replacing badge */}
+            <p 
+              id="hero-subtitle-desktop"
+              className="mt-4 text-base xl:text-lg text-white/90 font-light leading-relaxed max-w-[520px] drop-shadow-[0_2px_12px_rgba(0,0,0,0.75)]"
             >
-              <div className="flex items-center -space-x-1.5">
-                <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80"
-                  alt="Клиент"
-                  className="w-6 h-6 rounded-full border border-black/60 object-cover"
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&h=80&q=80"
-                  alt="Клиент"
-                  className="w-6 h-6 rounded-full border border-black/60 object-cover"
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80"
-                  alt="Клиент"
-                  className="w-6 h-6 rounded-full border border-black/60 object-cover"
-                />
-                <div className="w-6 h-6 rounded-full border border-black/60 bg-amber-400 text-black text-[9px] font-bold flex items-center justify-center">
-                  +400
-                </div>
-              </div>
-
-              <div className="w-[1px] h-3.5 bg-white/30" />
-
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center gap-0.5 text-amber-400">
-                  <Star className="w-3 h-3 fill-amber-400 stroke-amber-400" />
-                  <Star className="w-3 h-3 fill-amber-400 stroke-amber-400" />
-                  <Star className="w-3 h-3 fill-amber-400 stroke-amber-400" />
-                  <Star className="w-3 h-3 fill-amber-400 stroke-amber-400" />
-                  <Star className="w-3 h-3 fill-amber-400 stroke-amber-400" />
-                </div>
-                <span className="text-xs font-semibold text-white">
-                  5.0
-                </span>
-                <span className="text-white/40 text-xs">·</span>
-                <span className="text-[11px] text-white/90 font-medium">
-                  Сотни довольных клиентов
-                </span>
-              </div>
-            </div>
+              Авторские программы оздоровления, комплексное очищение организма и гармония с собственным телом.
+            </p>
 
             {/* Enlarged, lighter glass Social Media Icons */}
             <div 

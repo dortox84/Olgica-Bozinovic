@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import { ConfidentalNavbar } from './components/ConfidentalNavbar';
 import { ConfidentalHero } from './components/ConfidentalHero';
 import { ConfidentalModal } from './components/ConfidentalModal';
-import { QuoteScrollSection } from './components/QuoteScrollSection';
 import { CanYouRelateSection } from './components/CanYouRelateSection';
 import { ImpactResultsSection } from './components/ImpactResultsSection';
 
@@ -100,10 +99,7 @@ export default function App() {
         </main>
       </div>
 
-      {/* 2. White Sticky Quote Section with Word-by-Word Scroll Reveal */}
-      <QuoteScrollSection />
-
-      {/* 3. Next Section: "Can you relate?" matching the reference image */}
+      {/* 2. Next Section: "Can you relate?" matching the reference image */}
       <CanYouRelateSection 
         onRelateClick={handleOpenProducts}
       />
