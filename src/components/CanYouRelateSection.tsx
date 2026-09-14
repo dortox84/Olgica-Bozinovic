@@ -32,7 +32,7 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
   return (
     <section 
       id="can-you-relate-section"
-      className="relative w-full min-h-screen lg:h-[100dvh] lg:min-h-[100dvh] lg:max-h-[100dvh] overflow-visible lg:overflow-hidden bg-[#2C6E67] lg:bg-white text-stone-800 flex items-center justify-center snap-start scroll-mt-0"
+      className="relative w-full min-h-screen bg-[#2C6E67] lg:bg-white text-stone-800 flex items-center justify-center overflow-hidden"
     >
       {/* Background Split: On mobile/tablet, full-bleed #2C6E67 edge-to-edge. On desktop (lg+), Split Left White & Right #2C6E67 */}
       <div className="absolute inset-0 flex" aria-hidden="true">
@@ -43,25 +43,25 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
       </div>
 
       {/* Main Content Grid */}
-      <div className="relative z-10 w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-10 sm:py-14 lg:py-6 h-full flex items-center">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-10 xl:gap-14 items-center">
+      <div className="relative z-10 w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-8 sm:py-12 lg:py-6 h-full flex items-center">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-14 items-center">
           
-          {/* Column 1: Rounded Photo */}
+          {/* Column 1: Rounded Photo - Fully displayed without cropping on all mobile and desktop devices */}
           <div className="lg:col-span-5 xl:col-span-5 flex justify-center lg:justify-start">
             <div 
               id="relate-image-card"
-              className="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-none rounded-[24px] sm:rounded-[32px] lg:rounded-[40px] overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/20 lg:ring-black/10 group transition-transform duration-500 hover:scale-[1.01]"
+              className="relative w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[380px] lg:max-w-[460px] xl:max-w-[500px] aspect-square rounded-[22px] sm:rounded-[32px] lg:rounded-[40px] overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/25 lg:ring-black/10 group transition-transform duration-500 hover:scale-[1.01] bg-[#1E4D48]"
             >
-              {/* Portrait photo */}
+              {/* Portrait photo - aspect-square with object-contain ensures 100% of the 1:1 original image is fully displayed */}
               <img
                 src="https://res.cloudinary.com/l4orv4yo/image/upload/v1789296600/4a71d565-05e6-469b-a690-0ba4ffed9f28_ioaikn.png"
                 alt="Ольгица Божинович"
-                className="w-full h-[280px] xs:h-[320px] sm:h-[380px] lg:h-[66vh] xl:h-[70vh] lg:max-h-[560px] object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full aspect-square object-contain transition-transform duration-700 group-hover:scale-105"
               />
 
-              {/* Gentle warm vignette overlay */}
+              {/* Gentle subtle border ring */}
               <div 
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" 
+                className="pointer-events-none absolute inset-0 rounded-[22px] sm:rounded-[32px] lg:rounded-[40px] ring-1 ring-inset ring-white/15" 
                 aria-hidden="true" 
               />
             </div>

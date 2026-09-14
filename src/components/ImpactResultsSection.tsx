@@ -14,7 +14,7 @@ interface ImpactResultsSectionProps {
 
 export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onStoryClick }) => {
   const testimonials: TestimonialCardData[] = [
-    // Column 1 (lower offset)
+    // Card 1
     {
       id: 'testimonial-1',
       quote:
@@ -23,7 +23,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
       role: 'Программа Детокс',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80',
     },
-    // Column 2 (mid offset)
+    // Card 2
     {
       id: 'testimonial-2',
       quote:
@@ -32,7 +32,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
       role: 'Очищение печени BO',
       avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&h=120&q=80',
     },
-    // Column 3 - Top
+    // Card 3
     {
       id: 'testimonial-3',
       quote:
@@ -41,7 +41,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
       role: 'Восстановление здоровья',
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80',
     },
-    // Column 3 - Bottom
+    // Card 4
     {
       id: 'testimonial-4',
       quote:
@@ -50,7 +50,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
       role: 'Программа «Путь Здоровья»',
       avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=80',
     },
-    // Column 4 - Top
+    // Card 5
     {
       id: 'testimonial-5',
       quote:
@@ -59,7 +59,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
       role: 'Здоровье ЖКТ и метаболизм',
       avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&h=120&q=80',
     },
-    // Column 4 - Bottom
+    // Card 6
     {
       id: 'testimonial-6',
       quote:
@@ -67,6 +67,24 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
       author: 'Мария Йованович',
       role: 'Индивидуальный рацион',
       avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&h=120&q=80',
+    },
+    // Card 7
+    {
+      id: 'testimonial-7',
+      quote:
+        'Кожа очистилась, ушли постоянные высыпания и утренняя отечность. Никогда не думала, что состояние кишечника настолько прямо отражается на лице!',
+      author: 'Татьяна Васильевич',
+      role: 'Программа «Чистая кожа»',
+      avatar: 'https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&w=120&h=120&q=80',
+    },
+    // Card 8
+    {
+      id: 'testimonial-8',
+      quote:
+        'Анализы крови через 3 месяца после программы приятно удивили даже лечащего врача. Холестерин и ферритин впервые за 5 лет в норме.',
+      author: 'Александр Петрович',
+      role: 'Коррекция дефицитов',
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=120&h=120&q=80',
     },
   ];
 
@@ -114,91 +132,81 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
   return (
     <section
       id="testimonials-section"
-      className="relative w-full bg-[#ffffff] text-stone-900 py-16 sm:py-24 lg:py-28 px-4 sm:px-6 lg:px-12 xl:px-16 overflow-hidden select-none"
+      className="relative w-full bg-[#ffffff] text-stone-900 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 xl:px-16 overflow-hidden"
     >
-      <div className="max-w-[1440px] mx-auto relative">
+      <div className="w-full max-w-[1440px] mx-auto relative">
         
         {/* Main Flex/Grid container */}
         <div className="flex flex-col lg:flex-row items-start justify-between gap-8 xl:gap-12 relative">
           
-          {/* Left Column: Heading and Subtitle */}
-          <div className="w-full lg:w-[260px] xl:w-[300px] flex-shrink-0 flex flex-col justify-between self-stretch">
+          {/* Left Column: Heading, Subtitle and Trust Metrics */}
+          <div className="w-full lg:w-[280px] xl:w-[320px] flex-shrink-0 flex flex-col justify-between self-stretch">
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-[40px] xl:text-[44px] font-bold text-stone-900 tracking-tight leading-[1.15]">
-                What People Say<br />
-                <span className="text-stone-900 font-bold">About Us</span>
+              <h2 className="text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-bold text-stone-900 tracking-tight leading-[1.15]">
+                Что говорят<br />
+                <span className="text-stone-900 font-bold">о нас</span>
               </h2>
 
-              <p className="mt-4 text-xs sm:text-sm text-stone-500 font-normal leading-relaxed max-w-[280px]">
+              <p className="mt-4 text-xs sm:text-sm text-stone-500 font-normal leading-relaxed">
                 Истории участников, восстановивших здоровье, энергию и гармонию с телом благодаря авторским программам Ольгицы Божинович.
               </p>
-            </div>
 
-            {/* Bottom-left graphic accent: Teal quarter circle matching the mockup */}
-            <div className="hidden lg:block mt-16 xl:mt-24">
-              <div 
-                className="w-14 h-14 xl:w-16 xl:h-16 bg-[#14b8a6] rounded-tr-[100%] select-none pointer-events-none"
-                aria-hidden="true" 
-              />
+              {/* Trust & Rating Badges filling left column space */}
+              <div className="mt-8 pt-6 border-t border-stone-100 flex flex-col gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="flex text-amber-400 text-sm">
+                    {'★'.repeat(5)}
+                  </div>
+                  <span className="text-xs font-bold text-stone-800">4.9 / 5.0</span>
+                  <span className="text-[11px] text-stone-400 font-normal">(1 200+ отзывов)</span>
+                </div>
+
+                <div className="flex flex-col gap-2.5">
+                  <div className="flex items-center gap-2 text-[12px] text-stone-600">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
+                    <span>98% участников отмечают прилив сил</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[12px] text-stone-600">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
+                    <span>Более 10 лет доказательной практики</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[12px] text-stone-600">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
+                    <span>100% персонализированный подход</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Right Section: Multi-column Staggered Grid matching the image */}
+          {/* Right Section: Multi-column Staggered Grid */}
           <div className="flex-1 w-full relative">
 
-            {/* Floating Graphic Accents matching the image */}
-            {/* 1. Yellow dot near column 1/2 */}
-            <div 
-              className="hidden lg:block absolute -top-4 left-[23%] w-3.5 h-3.5 rounded-full bg-[#facc15] select-none pointer-events-none z-10" 
-              aria-hidden="true"
-            />
-
-            {/* 2. Small indigo angular shape between column 2 & 3 */}
-            <div 
-              className="hidden lg:block absolute bottom-4 left-[46%] w-3.5 h-3.5 bg-[#3b82f6] rounded-br-md select-none pointer-events-none z-10" 
-              aria-hidden="true"
-            />
-
-            {/* 3. Small hot pink accent above top of column 3/4 */}
-            <div 
-              className="hidden lg:block absolute -top-3 right-[28%] w-3.5 h-3.5 bg-[#f43f5e] rounded-tl-md select-none pointer-events-none z-10" 
-              aria-hidden="true"
-            />
-
-            {/* 4. Far Right Lilac & Coral organic pill shapes */}
-            <div 
-              className="hidden 2xl:flex flex-col absolute -right-16 top-1/3 -translate-y-1/2 select-none pointer-events-none z-0" 
-              aria-hidden="true"
-            >
-              {/* Lilac shape with rounded-tr and rounded-br */}
-              <div className="w-12 h-14 bg-[#c084fc] rounded-r-[36px] rounded-tl-[36px]" />
-              {/* Coral/peach shape */}
-              <div className="w-12 h-14 bg-[#fca5a5] rounded-r-[36px] rounded-bl-[36px] -mt-1" />
-            </div>
-
-            {/* Desktop / Large Screen Layout: 4 Columns Staggered (Matches Screenshot) */}
+            {/* Desktop / Large Screen Layout: 4 Columns Staggered, All 8 Cards Balanced */}
             <div className="hidden lg:grid grid-cols-4 gap-4 xl:gap-5 items-start">
               
-              {/* Column 1: Single card shifted down */}
-              <div className="flex flex-col pt-24 xl:pt-32">
-                {renderCard(testimonials[0], 'min-h-[220px]')}
+              {/* Column 1: Two cards */}
+              <div className="flex flex-col gap-3.5 xl:gap-4 pt-4 xl:pt-6">
+                {renderCard(testimonials[0], 'min-h-[195px]')}
+                {renderCard(testimonials[6], 'min-h-[195px]')}
               </div>
 
-              {/* Column 2: Single card shifted medium */}
-              <div className="flex flex-col pt-10 xl:pt-14">
-                {renderCard(testimonials[1], 'min-h-[220px]')}
+              {/* Column 2: Two cards */}
+              <div className="flex flex-col gap-3.5 xl:gap-4 pt-0">
+                {renderCard(testimonials[1], 'min-h-[195px]')}
+                {renderCard(testimonials[7], 'min-h-[195px]')}
               </div>
 
-              {/* Column 3: Two cards stacked vertically */}
-              <div className="flex flex-col gap-4 xl:gap-5 pt-0">
-                {renderCard(testimonials[2], 'min-h-[210px]')}
-                {renderCard(testimonials[3], 'min-h-[210px]')}
+              {/* Column 3: Two cards */}
+              <div className="flex flex-col gap-3.5 xl:gap-4 pt-6 xl:pt-8">
+                {renderCard(testimonials[2], 'min-h-[195px]')}
+                {renderCard(testimonials[3], 'min-h-[195px]')}
               </div>
 
-              {/* Column 4: Two cards stacked vertically with slight offset */}
-              <div className="flex flex-col gap-4 xl:gap-5 pt-6 xl:pt-8">
-                {renderCard(testimonials[4], 'min-h-[210px]')}
-                {renderCard(testimonials[5], 'min-h-[210px]')}
+              {/* Column 4: Two cards */}
+              <div className="flex flex-col gap-3.5 xl:gap-4 pt-2 xl:pt-3">
+                {renderCard(testimonials[4], 'min-h-[195px]')}
+                {renderCard(testimonials[5], 'min-h-[195px]')}
               </div>
 
             </div>
@@ -206,14 +214,6 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
             {/* Tablet & Mobile Layout: Responsive Clean Staggered Flow */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:hidden gap-4 sm:gap-5">
               {testimonials.map((card) => renderCard(card))}
-            </div>
-
-            {/* Mobile Teal Accent */}
-            <div className="block lg:hidden mt-8">
-              <div 
-                className="w-10 h-10 bg-[#14b8a6] rounded-tr-[100%] select-none pointer-events-none"
-                aria-hidden="true" 
-              />
             </div>
 
           </div>

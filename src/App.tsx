@@ -9,6 +9,7 @@ import { ConfidentalHero } from './components/ConfidentalHero';
 import { ConfidentalModal } from './components/ConfidentalModal';
 import { CanYouRelateSection } from './components/CanYouRelateSection';
 import { ImpactResultsSection } from './components/ImpactResultsSection';
+import { CtaBannerSection } from './components/CtaBannerSection';
 
 const HERO_BG_URL = 'https://res.cloudinary.com/l4orv4yo/image/upload/v1789260118/1e583dcc-88ab-40e0-a51b-9a7ca95b2ac6_tzzqd3.png';
 
@@ -42,6 +43,13 @@ export default function App() {
         return;
       }
     }
+    if (section === 'results') {
+      const el = document.getElementById('testimonials-section');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+    }
     if (section === 'contact') {
       handleOpenContact();
       return;
@@ -54,11 +62,10 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d0c0b] text-white flex flex-col selection:bg-amber-500/20 selection:text-white relative">
+    <div className="relative w-full bg-white text-stone-900 selection:bg-amber-500/20 selection:text-stone-900">
       
-      {/* 1. First Screen: Hero Section */}
-      <div className="relative min-h-screen flex flex-col justify-between overflow-hidden">
-        
+      {/* 1. Hero Section */}
+      <div className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-black text-white">
         {/* Background Hero Photography Layer */}
         <div 
           id="hero-background-layer"
@@ -72,9 +79,9 @@ export default function App() {
             className="w-full h-full object-cover object-[center_20%] lg:object-center scale-[1.02] transition-transform duration-1000"
           />
 
-          {/* Ambient Dark Gradients matching the design */}
+          {/* Ambient Dark Gradients */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-black/10" />
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0d0c0b]/90 via-[#0d0c0b]/40 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent" />
         </div>
 
@@ -91,22 +98,28 @@ export default function App() {
         />
 
         {/* Hero Body Content */}
-        <main className="relative z-10 flex-grow flex flex-col justify-between">
+        <div className="relative z-10 flex-grow flex flex-col justify-between">
           <ConfidentalHero 
             onExploreProducts={handleOpenProducts}
             onTickerClick={() => handleOpenSection('research')}
           />
-        </main>
+        </div>
       </div>
 
-      {/* 2. Next Section: "Can you relate?" matching the reference image */}
+      {/* 2. Awareness & "Can You Relate?" Section */}
       <CanYouRelateSection 
         onRelateClick={handleOpenProducts}
       />
 
-      {/* 4. Our Impact & Testimonials with 20.500+ Instagram Followers & Progress Bars */}
+      {/* 3. Testimonials & Social Proof Section */}
       <ImpactResultsSection 
         onStoryClick={() => handleOpenSection('results')}
+      />
+
+      {/* 4. Call to Action Banner & Footer */}
+      <CtaBannerSection 
+        onPrimaryClick={handleOpenProducts}
+        onSecondaryClick={handleOpenContact}
       />
 
       {/* Interactive Modal System */}
