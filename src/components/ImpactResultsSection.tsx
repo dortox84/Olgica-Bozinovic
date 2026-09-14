@@ -1,4 +1,6 @@
 import React from 'react';
+import { RevealText } from './RevealText';
+import { Reveal } from './Reveal';
 
 interface TestimonialCardData {
   id: string;
@@ -142,40 +144,44 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
           {/* Left Column: Heading, Subtitle and Trust Metrics */}
           <div className="w-full lg:w-[280px] xl:w-[320px] flex-shrink-0 flex flex-col justify-between self-stretch">
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-bold text-stone-900 tracking-tight leading-[1.15]">
-                Что говорят<br />
-                <span className="text-stone-900 font-bold">о нас</span>
-              </h2>
+              <RevealText
+                lines={['Что говорят', 'о нас']}
+                className="text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-bold text-stone-900 tracking-tight leading-[1.15]"
+              />
 
-              <p className="mt-4 text-xs sm:text-sm text-stone-500 font-normal leading-relaxed">
-                Истории участников, восстановивших здоровье, энергию и гармонию с телом благодаря авторским программам Ольгицы Божинович.
-              </p>
+              <Reveal delay={120} y={16}>
+                <p className="mt-4 text-xs sm:text-sm text-stone-500 font-normal leading-relaxed">
+                  Истории участников, восстановивших здоровье, энергию и гармонию с телом благодаря авторским программам Ольгицы Божинович.
+                </p>
+              </Reveal>
 
               {/* Trust & Rating Badges filling left column space */}
-              <div className="mt-8 pt-6 border-t border-stone-100 flex flex-col gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="flex text-amber-400 text-sm">
-                    {'★'.repeat(5)}
+              <Reveal delay={200} y={20}>
+                <div className="mt-8 pt-6 border-t border-stone-100 flex flex-col gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="flex text-amber-400 text-sm">
+                      {'★'.repeat(5)}
+                    </div>
+                    <span className="text-xs font-bold text-stone-800">4.9 / 5.0</span>
+                    <span className="text-[11px] text-stone-400 font-normal">(1 200+ отзывов)</span>
                   </div>
-                  <span className="text-xs font-bold text-stone-800">4.9 / 5.0</span>
-                  <span className="text-[11px] text-stone-400 font-normal">(1 200+ отзывов)</span>
-                </div>
 
-                <div className="flex flex-col gap-2.5">
-                  <div className="flex items-center gap-2 text-[12px] text-stone-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
-                    <span>98% участников отмечают прилив сил</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[12px] text-stone-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
-                    <span>Более 10 лет доказательной практики</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[12px] text-stone-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
-                    <span>100% персонализированный подход</span>
+                  <div className="flex flex-col gap-2.5">
+                    <div className="flex items-center gap-2 text-[12px] text-stone-600">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
+                      <span>98% участников отмечают прилив сил</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-[12px] text-stone-600">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
+                      <span>Более 10 лет доказательной практики</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-[12px] text-stone-600">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
+                      <span>100% персонализированный подход</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             </div>
           </div>
 
@@ -186,34 +192,38 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
             <div className="hidden lg:grid grid-cols-4 gap-4 xl:gap-5 items-start">
               
               {/* Column 1: Two cards */}
-              <div className="flex flex-col gap-3.5 xl:gap-4 pt-4 xl:pt-6">
+              <Reveal delay={100} y={24} className="flex flex-col gap-3.5 xl:gap-4 pt-4 xl:pt-6">
                 {renderCard(testimonials[0], 'min-h-[195px]')}
                 {renderCard(testimonials[6], 'min-h-[195px]')}
-              </div>
+              </Reveal>
 
               {/* Column 2: Two cards */}
-              <div className="flex flex-col gap-3.5 xl:gap-4 pt-0">
+              <Reveal delay={180} y={24} className="flex flex-col gap-3.5 xl:gap-4 pt-0">
                 {renderCard(testimonials[1], 'min-h-[195px]')}
                 {renderCard(testimonials[7], 'min-h-[195px]')}
-              </div>
+              </Reveal>
 
               {/* Column 3: Two cards */}
-              <div className="flex flex-col gap-3.5 xl:gap-4 pt-6 xl:pt-8">
+              <Reveal delay={260} y={24} className="flex flex-col gap-3.5 xl:gap-4 pt-6 xl:pt-8">
                 {renderCard(testimonials[2], 'min-h-[195px]')}
                 {renderCard(testimonials[3], 'min-h-[195px]')}
-              </div>
+              </Reveal>
 
               {/* Column 4: Two cards */}
-              <div className="flex flex-col gap-3.5 xl:gap-4 pt-2 xl:pt-3">
+              <Reveal delay={340} y={24} className="flex flex-col gap-3.5 xl:gap-4 pt-2 xl:pt-3">
                 {renderCard(testimonials[4], 'min-h-[195px]')}
                 {renderCard(testimonials[5], 'min-h-[195px]')}
-              </div>
+              </Reveal>
 
             </div>
 
             {/* Tablet & Mobile Layout: Responsive Clean Staggered Flow */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:hidden gap-4 sm:gap-5">
-              {testimonials.map((card) => renderCard(card))}
+              {testimonials.map((card, idx) => (
+                <Reveal key={card.id} delay={idx * 75} y={18}>
+                  {renderCard(card)}
+                </Reveal>
+              ))}
             </div>
 
           </div>
