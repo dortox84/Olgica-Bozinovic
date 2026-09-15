@@ -1,4 +1,5 @@
 import React from 'react';
+import { Sparkles } from 'lucide-react';
 import { RevealText } from './RevealText';
 import { Reveal } from './Reveal';
 
@@ -96,7 +97,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
       role: 'Семейное здоровье',
       avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&h=120&q=80',
     },
-    // Card 9 (New)
+    // Card 9
     {
       id: 'testimonial-9',
       quote:
@@ -106,7 +107,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
       avatar: 'https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&w=120&h=120&q=80',
       tag: 'Легкость',
     },
-    // Card 10 (New)
+    // Card 10
     {
       id: 'testimonial-10',
       quote:
@@ -117,7 +118,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
       tag: 'Анализы в норме',
       highlight: true,
     },
-    // Card 11 (New)
+    // Card 11
     {
       id: 'testimonial-11',
       quote:
@@ -126,7 +127,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
       role: 'Гормональный баланс',
       avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=120&h=120&q=80',
     },
-    // Card 12 (New)
+    // Card 12
     {
       id: 'testimonial-12',
       quote:
@@ -190,52 +191,79 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
         =============================================================================
         SECTION POSITIONING & 100VH PRESENTATION CARD (SECTION 3):
         - `h-full min-h-screen max-h-screen` maintains 100vh presentation slide.
-        - `overflow-y-auto` ensures smooth scrolling on small laptops or tablets.
+        - Background split: Left side expanded (~34%-37%, still comfortably < 50%)
+          with deep sea-pine #2c6d67, Right side is clean white!
+        - Inverts Section 2 ("Знакомо ли вам это?"), where #2c6d67 is on the right side.
+        - `overflow-x-hidden overflow-y-auto` ensures smooth scrolling without spill.
         =============================================================================
       */
-      className="relative w-full h-full min-h-screen max-h-screen bg-[#ffffff] text-stone-900 py-5 sm:py-7 lg:py-8 px-4 sm:px-6 lg:px-10 xl:px-14 flex items-center justify-center overflow-y-auto"
+      className="relative w-full h-full min-h-screen max-h-screen bg-white text-stone-900 py-5 sm:py-7 lg:py-8 px-4 sm:px-6 lg:px-10 xl:px-14 flex items-center justify-center overflow-x-hidden overflow-y-auto"
     >
-      <div className="w-full max-w-[1500px] mx-auto relative my-auto">
+      {/* Background Split: Expanded Left side (~34%-37%) with #2c6d67, Right side white */}
+      <div className="absolute inset-0 flex pointer-events-none overflow-hidden" aria-hidden="true">
+        {/* Left vertical #2c6d67 band - desktop only, expanded to ~34%-37% */}
+        <div className="hidden lg:block w-[33%] xl:w-[35%] 2xl:w-[36%] bg-[#2c6d67] h-full flex-shrink-0 border-r border-[#235852]/30 shadow-[4px_0_24px_rgba(0,0,0,0.08)]" />
+        {/* Right clean white backdrop */}
+        <div className="w-full lg:flex-1 bg-white h-full" />
+      </div>
+
+      <div className="w-full max-w-[1580px] mx-auto relative my-auto z-10">
         
         {/* Main Flex/Grid container */}
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-6 lg:gap-8 xl:gap-10 relative">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-6 lg:gap-10 xl:gap-14 relative">
           
-          {/* Left Column: Heading, Subtitle and Trust Metrics */}
-          <div className="w-full lg:w-[250px] xl:w-[280px] flex-shrink-0 flex flex-col justify-between self-stretch">
-            <div>
+          {/* Left Column: Heading, Subtitle and Trust Metrics (Over the expanded #2c6d67 background) */}
+          <div className="relative w-full lg:w-[290px] xl:w-[330px] 2xl:w-[370px] flex-shrink-0 flex flex-col justify-between self-stretch z-10">
+            {/* Full-bleed left background extension for desktop to seamlessly anchor #2c6d67 to the screen edge */}
+            <div 
+              className="hidden lg:block absolute -top-32 -bottom-32 -left-[100vw] -right-6 xl:-right-10 bg-[#2c6d67] -z-10 border-r border-[#235852]/40 shadow-[4px_0_24px_rgba(0,0,0,0.08)] pointer-events-none" 
+              aria-hidden="true" 
+            />
+
+            {/* Content card wrapper: on mobile/tablet it gets #2c6d67 card background, on desktop it seamlessly sits on the left band */}
+            <div className="bg-[#2c6d67] lg:bg-transparent text-white p-5 sm:p-6 lg:p-0 rounded-[22px] sm:rounded-[26px] lg:rounded-none shadow-lg lg:shadow-none mb-2 lg:mb-0">
+              
+              {/* Category Pill */}
+              <Reveal delay={60} y={12}>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-[#D8EFEB] text-[10.5px] sm:text-[11.5px] font-medium uppercase tracking-wider mb-2.5 sm:mb-3">
+                  <Sparkles className="w-3 h-3 text-amber-300" />
+                  <span>Отзывы &middot; Результаты</span>
+                </div>
+              </Reveal>
+
               <RevealText
                 lines={['Что говорят', 'о нас']}
-                className="text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-bold text-stone-900 tracking-tight leading-[1.12]"
+                className="font-serif-title text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-bold text-white tracking-tight leading-[1.12]"
               />
 
               <Reveal delay={120} y={16}>
-                <p className="mt-3 text-xs sm:text-[12.5px] text-stone-500 font-normal leading-relaxed">
+                <p className="mt-3 text-xs sm:text-[12.5px] text-[#D4ECE6] font-light leading-relaxed">
                   Истории участников, восстановивших здоровье, энергию и гармонию с телом благодаря авторским программам Ольгицы Божинович.
                 </p>
               </Reveal>
 
               {/* Trust & Rating Badges */}
               <Reveal delay={200} y={20}>
-                <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-stone-100 flex flex-col gap-3">
+                <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-white/20 flex flex-col gap-3">
                   <div className="flex items-center gap-2">
-                    <div className="flex text-amber-400 text-xs sm:text-sm">
+                    <div className="flex text-amber-300 text-xs sm:text-sm">
                       {'★'.repeat(5)}
                     </div>
-                    <span className="text-xs font-bold text-stone-800">4.9 / 5.0</span>
-                    <span className="text-[10.5px] text-stone-400 font-normal">(1 200+ отзывов)</span>
+                    <span className="text-xs font-bold text-white">4.9 / 5.0</span>
+                    <span className="text-[10.5px] text-[#C1DFD9] font-normal">(1 200+ отзывов)</span>
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-2 text-[11px] sm:text-[11.5px] text-stone-600">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
+                    <div className="flex items-center gap-2 text-[11px] sm:text-[11.5px] text-[#F0F7F5]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 shrink-0" />
                       <span>98% участников отмечают прилив сил</span>
                     </div>
-                    <div className="flex items-center gap-2 text-[11px] sm:text-[11.5px] text-stone-600">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
+                    <div className="flex items-center gap-2 text-[11px] sm:text-[11.5px] text-[#F0F7F5]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 shrink-0" />
                       <span>Более 10 лет доказательной практики</span>
                     </div>
-                    <div className="flex items-center gap-2 text-[11px] sm:text-[11.5px] text-stone-600">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
+                    <div className="flex items-center gap-2 text-[11px] sm:text-[11.5px] text-[#F0F7F5]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 shrink-0" />
                       <span>100% персонализированный подход</span>
                     </div>
                   </div>
@@ -244,7 +272,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
             </div>
           </div>
 
-          {/* Right Section: Staggered Multi-column Floating Grid (Neka gore, neka dole) */}
+          {/* Right Section: Staggered Multi-column Floating Grid on White Background */}
           <div className="flex-1 w-full relative">
 
             {/* 
@@ -253,7 +281,7 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
               - Column 2: Shifted down (lg:translate-y-7)
               - Column 3: Shifted slightly up (lg:-translate-y-1)
               - Column 4: Shifted down (lg:translate-y-9)
-              Fills all empty top and bottom areas dynamically!
+              Fills all empty top and bottom areas dynamically on crisp white background!
             */}
             <div className="hidden lg:grid grid-cols-4 gap-3 xl:gap-3.5 items-start">
               
@@ -304,3 +332,4 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
     </section>
   );
 };
+

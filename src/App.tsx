@@ -394,12 +394,7 @@ export default function App() {
           className="snap-card sticky top-0 h-screen min-h-screen max-h-screen w-full z-50 overflow-hidden rounded-t-[28px] sm:rounded-t-[36px] lg:rounded-t-[44px] shadow-[0_-25px_60px_rgba(0,0,0,0.38)] border-t border-stone-200 bg-white"
         >
           <BlogCardsSection 
-            onCardClick={() => {
-              // Interactive feedback; user will specify blog post page later
-            }}
-            onExploreAllClick={() => {
-              // Interactive feedback
-            }}
+            onConsultationClick={handleOpenContact}
           />
         </div>
 
