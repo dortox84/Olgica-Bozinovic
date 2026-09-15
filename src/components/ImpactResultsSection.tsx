@@ -74,58 +74,44 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
     {
       id: 'testimonial-7',
       quote:
-        'Кожа очистилась, ушли постоянные высыпания и утренняя отечность. Никогда не думала, что состояние кишечника настолько прямо отражается на лице!',
-      author: 'Татьяна Васильевич',
-      role: 'Программа «Чистая кожа»',
-      avatar: 'https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&w=120&h=120&q=80',
+        'Благодаря очищению печени и правильному режиму ушли постоянные мигрени, очистилась кожа и нормализовался сон. Огромная благодарность!',
+      author: 'Теодора Николич',
+      role: 'Очищение печени',
+      avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=120&h=120&q=80',
     },
     // Card 8
     {
       id: 'testimonial-8',
       quote:
-        'Анализы крови через 3 месяца после программы приятно удивили даже лечащего врача. Холестерин и ферритин впервые за 5 лет в норме.',
-      author: 'Александр Петрович',
-      role: 'Коррекция дефицитов',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=120&h=120&q=80',
+        'Профессионализм высшего класса. Без навязывания лишнего — только точечные рекомендации, изменившие качество жизни меня и моих близких.',
+      author: 'Александар Лазич',
+      role: 'Семейное здоровье',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&h=120&q=80',
     },
   ];
 
-  // Helper render for single testimonial card matching the uploaded mockup
   const renderCard = (card: TestimonialCardData, extraClasses: string = '') => (
     <div
-      key={card.id}
-      id={`card-${card.id}`}
-      onClick={() => onStoryClick?.(card.id)}
-      className={`bg-white rounded-[16px] sm:rounded-[18px] p-5 sm:p-6 shadow-[0_12px_36px_rgba(0,0,0,0.06)] border border-stone-100/90 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_42px_rgba(0,0,0,0.10)] cursor-pointer group ${extraClasses}`}
+      onClick={() => onStoryClick && onStoryClick(card.id)}
+      className={`group relative rounded-[20px] sm:rounded-[22px] p-3.5 sm:p-4 transition-all duration-300 cursor-pointer flex flex-col justify-between border border-stone-200/90 bg-stone-50/70 hover:bg-white hover:border-stone-300 hover:shadow-lg hover:shadow-stone-900/5 ${extraClasses}`}
     >
-      <div>
-        {/* Double quote mark */}
-        <div className="mb-3 text-stone-900 select-none">
-          <svg className="w-4 h-4 fill-stone-900" viewBox="0 0 24 24">
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-          </svg>
-        </div>
+      <p className="text-[11.5px] xl:text-[12px] text-stone-700 leading-[1.5] font-light">
+        «{card.quote}»
+      </p>
 
-        {/* Testimonial body text */}
-        <p className="text-[12.5px] sm:text-[13px] text-stone-600 font-normal leading-[1.65]">
-          {card.quote}
-        </p>
-      </div>
-
-      {/* Author Footer */}
-      <div className="mt-5 pt-3 flex items-center gap-2.5">
+      <div className="flex items-center gap-2.5 mt-3 pt-2.5 border-t border-stone-200/60">
         <img
           src={card.avatar}
           alt={card.author}
-          className="w-8 h-8 rounded-full object-cover border border-stone-200 flex-shrink-0"
+          className="w-7 h-7 rounded-full object-cover ring-1 ring-stone-300"
         />
-        <div className="min-w-0">
-          <h4 className="text-[11px] sm:text-[11.5px] font-bold uppercase tracking-wider text-stone-900 truncate">
+        <div className="min-w-0 flex-1">
+          <h4 className="text-[12px] font-semibold text-stone-900 truncate">
             {card.author}
           </h4>
-          <p className="text-[10px] text-stone-400 font-medium truncate">
+          <span className="text-[10px] text-stone-500 font-normal truncate block">
             {card.role}
-          </p>
+          </span>
         </div>
       </div>
     </div>
@@ -134,48 +120,56 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
   return (
     <section
       id="testimonials-section"
-      className="relative w-full bg-[#ffffff] text-stone-900 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 xl:px-16 overflow-hidden"
+      /* 
+        =============================================================================
+        SECTION POSITIONING & 100VH PRESENTATION CARD (SECTION 3):
+        - `h-full min-h-screen max-h-screen` maintains 100vh presentation slide.
+        - `overflow-y-auto lg:overflow-hidden` ensures full internal access on small screens
+          while keeping desktop as a crisp 100vh viewport slide.
+        =============================================================================
+      */
+      className="relative w-full h-full min-h-screen max-h-screen bg-[#ffffff] text-stone-900 py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-12 xl:px-16 flex items-center justify-center overflow-y-auto lg:overflow-hidden"
     >
-      <div className="w-full max-w-[1440px] mx-auto relative">
+      <div className="w-full max-w-[1480px] mx-auto relative my-auto">
         
         {/* Main Flex/Grid container */}
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-8 xl:gap-12 relative">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-6 lg:gap-8 xl:gap-10 relative">
           
           {/* Left Column: Heading, Subtitle and Trust Metrics */}
-          <div className="w-full lg:w-[280px] xl:w-[320px] flex-shrink-0 flex flex-col justify-between self-stretch">
+          <div className="w-full lg:w-[260px] xl:w-[300px] flex-shrink-0 flex flex-col justify-between self-stretch">
             <div>
               <RevealText
                 lines={['Что говорят', 'о нас']}
-                className="text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-bold text-stone-900 tracking-tight leading-[1.15]"
+                className="text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-bold text-stone-900 tracking-tight leading-[1.12]"
               />
 
               <Reveal delay={120} y={16}>
-                <p className="mt-4 text-xs sm:text-sm text-stone-500 font-normal leading-relaxed">
+                <p className="mt-3 text-xs sm:text-[13px] text-stone-500 font-normal leading-relaxed">
                   Истории участников, восстановивших здоровье, энергию и гармонию с телом благодаря авторским программам Ольгицы Божинович.
                 </p>
               </Reveal>
 
-              {/* Trust & Rating Badges filling left column space */}
+              {/* Trust & Rating Badges */}
               <Reveal delay={200} y={20}>
-                <div className="mt-8 pt-6 border-t border-stone-100 flex flex-col gap-4">
+                <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-stone-100 flex flex-col gap-3">
                   <div className="flex items-center gap-2">
-                    <div className="flex text-amber-400 text-sm">
+                    <div className="flex text-amber-400 text-xs sm:text-sm">
                       {'★'.repeat(5)}
                     </div>
                     <span className="text-xs font-bold text-stone-800">4.9 / 5.0</span>
-                    <span className="text-[11px] text-stone-400 font-normal">(1 200+ отзывов)</span>
+                    <span className="text-[10.5px] text-stone-400 font-normal">(1 200+ отзывов)</span>
                   </div>
 
-                  <div className="flex flex-col gap-2.5">
-                    <div className="flex items-center gap-2 text-[12px] text-stone-600">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2 text-[11px] sm:text-[11.5px] text-stone-600">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
                       <span>98% участников отмечают прилив сил</span>
                     </div>
-                    <div className="flex items-center gap-2 text-[12px] text-stone-600">
+                    <div className="flex items-center gap-2 text-[11px] sm:text-[11.5px] text-stone-600">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
                       <span>Более 10 лет доказательной практики</span>
                     </div>
-                    <div className="flex items-center gap-2 text-[12px] text-stone-600">
+                    <div className="flex items-center gap-2 text-[11px] sm:text-[11.5px] text-stone-600">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#2C6E67]" />
                       <span>100% персонализированный подход</span>
                     </div>
@@ -188,39 +182,39 @@ export const ImpactResultsSection: React.FC<ImpactResultsSectionProps> = ({ onSt
           {/* Right Section: Multi-column Staggered Grid */}
           <div className="flex-1 w-full relative">
 
-            {/* Desktop / Large Screen Layout: 4 Columns Staggered, All 8 Cards Balanced */}
-            <div className="hidden lg:grid grid-cols-4 gap-4 xl:gap-5 items-start">
+            {/* Desktop: 4 Columns Staggered, All 8 Cards Balanced to fit cleanly in 100vh */}
+            <div className="hidden lg:grid grid-cols-4 gap-3 xl:gap-3.5 items-start">
               
               {/* Column 1: Two cards */}
-              <Reveal delay={100} y={24} className="flex flex-col gap-3.5 xl:gap-4 pt-4 xl:pt-6">
-                {renderCard(testimonials[0], 'min-h-[195px]')}
-                {renderCard(testimonials[6], 'min-h-[195px]')}
+              <Reveal delay={100} y={20} className="flex flex-col gap-3 pt-3">
+                {renderCard(testimonials[0], 'min-h-[160px]')}
+                {renderCard(testimonials[6], 'min-h-[160px]')}
               </Reveal>
 
               {/* Column 2: Two cards */}
-              <Reveal delay={180} y={24} className="flex flex-col gap-3.5 xl:gap-4 pt-0">
-                {renderCard(testimonials[1], 'min-h-[195px]')}
-                {renderCard(testimonials[7], 'min-h-[195px]')}
+              <Reveal delay={180} y={20} className="flex flex-col gap-3 pt-0">
+                {renderCard(testimonials[1], 'min-h-[160px]')}
+                {renderCard(testimonials[7], 'min-h-[160px]')}
               </Reveal>
 
               {/* Column 3: Two cards */}
-              <Reveal delay={260} y={24} className="flex flex-col gap-3.5 xl:gap-4 pt-6 xl:pt-8">
-                {renderCard(testimonials[2], 'min-h-[195px]')}
-                {renderCard(testimonials[3], 'min-h-[195px]')}
+              <Reveal delay={260} y={20} className="flex flex-col gap-3 pt-4">
+                {renderCard(testimonials[2], 'min-h-[160px]')}
+                {renderCard(testimonials[3], 'min-h-[160px]')}
               </Reveal>
 
               {/* Column 4: Two cards */}
-              <Reveal delay={340} y={24} className="flex flex-col gap-3.5 xl:gap-4 pt-2 xl:pt-3">
-                {renderCard(testimonials[4], 'min-h-[195px]')}
-                {renderCard(testimonials[5], 'min-h-[195px]')}
+              <Reveal delay={340} y={20} className="flex flex-col gap-3 pt-1">
+                {renderCard(testimonials[4], 'min-h-[160px]')}
+                {renderCard(testimonials[5], 'min-h-[160px]')}
               </Reveal>
 
             </div>
 
-            {/* Tablet & Mobile Layout: Responsive Clean Staggered Flow */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:hidden gap-4 sm:gap-5">
+            {/* Tablet & Mobile Layout: Clean Flow */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:hidden gap-3 sm:gap-4">
               {testimonials.map((card, idx) => (
-                <Reveal key={card.id} delay={idx * 75} y={18}>
+                <Reveal key={card.id} delay={idx * 50} y={15}>
                   {renderCard(card)}
                 </Reveal>
               ))}

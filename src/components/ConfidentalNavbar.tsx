@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { OlgicaLogo } from './OlgicaLogo';
-import { Menu, X, Sparkles, BookOpen, ShieldCheck, Mail, Phone, MapPin } from 'lucide-react';
-import { InstagramIcon, TikTokIcon, OKIcon, TelegramIcon } from './SocialIcons';
-import { OLGICA_DATA } from '../data/bozinovicData';
+import { Menu, X, ArrowRight } from 'lucide-react';
 
 interface ConfidentalNavbarProps {
   onContactClick: () => void;
@@ -13,204 +11,164 @@ export const ConfidentalNavbar: React.FC<ConfidentalNavbarProps> = ({
   onContactClick,
   onNavClick,
 }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'home' | 'about' | 'services' | 'reviews' | 'contact'>('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const menuItems = [
-    { id: 'home', label: 'Главная', icon: Sparkles, desc: 'Встань на путь здоровья' },
-    { id: 'methods', label: 'Обо мне & Подход', icon: BookOpen, desc: 'Биотехнологии, фармация и коучинг' },
-    { id: 'products', label: 'Программы Здоровья', icon: ShieldCheck, desc: 'Очищение печени и Путь Здоровья BO' },
-    { id: 'contact', label: 'Контакты & Консультации', icon: Mail, desc: 'Записаться на встречу или задать вопрос' },
+  const navLinks: Array<{ id: 'home' | 'about' | 'services' | 'reviews' | 'contact'; label: string }> = [
+    { id: 'home', label: 'Главная' },
+    { id: 'about', label: 'Обо мне' },
+    { id: 'services', label: 'Программы' },
+    { id: 'reviews', label: 'Отзывы' },
+    { id: 'contact', label: 'Контакты' },
   ];
 
-  const handleItemClick = (id: string) => {
-    setMenuOpen(false);
-    if (id === 'contact') {
+  const handleTabClick = (tab: 'home' | 'about' | 'services' | 'reviews' | 'contact') => {
+    setActiveTab(tab);
+    setMobileMenuOpen(false);
+
+    if (tab === 'home') {
+      onNavClick('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (tab === 'about') {
+      onNavClick('methods');
+      const el = document.getElementById('can-you-relate-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else if (tab === 'services') {
+      onNavClick('products');
+    } else if (tab === 'reviews') {
+      const el = document.getElementById('testimonials-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else if (tab === 'contact') {
       onContactClick();
-    } else {
-      onNavClick(id);
     }
   };
 
   return (
     <>
-      <header className="w-full relative z-30 pt-6 sm:pt-8 px-6 sm:px-10 lg:px-16">
-        <div className="max-w-[1720px] mx-auto grid grid-cols-3 items-center">
+      <header className="w-full relative z-30 pt-5 sm:pt-7 lg:pt-8 px-5 sm:px-8 lg:px-14 xl:px-16">
+        <div className="max-w-[1720px] mx-auto flex items-center justify-between">
           
-          {/* Left Side: Hamburger Menu Button with brightened translucent glass */}
-          <div className="flex items-center justify-start">
+          {/* 1. Left: Brand Logo (Left untouched as instructed) */}
+          <div className="flex items-center">
             <button
-              id="hamburger-menu-btn"
-              onClick={() => setMenuOpen(true)}
-              className="group flex items-center gap-2.5 rounded-full border border-white/35 hover:border-white bg-white/[0.12] hover:bg-white/[0.22] active:scale-95 transition-all duration-200 px-3.5 sm:px-4 py-2 text-white cursor-pointer backdrop-blur-xl shadow-lg shadow-black/25"
+              onClick={() => handleTabClick('home')}
+              className="cursor-pointer focus:outline-none transition-transform duration-300 hover:scale-[1.02]"
+              aria-label="Božinović Olgica"
+            >
+              <OlgicaLogo className="h-8 sm:h-9 lg:h-11 w-auto" theme="dark" />
+            </button>
+          </div>
+
+          {/* 2. Center: Floating Frosted Pill Menu in Russian */}
+          <nav 
+            className="hidden md:flex items-center bg-white/[0.14] hover:bg-white/[0.18] backdrop-blur-xl border border-white/20 rounded-full p-1.5 shadow-lg shadow-black/15 transition-all duration-300"
+            aria-label="Основная навигация"
+          >
+            {navLinks.map((link) => {
+              const isActive = activeTab === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleTabClick(link.id)}
+                  className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-[13px] font-medium transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? 'bg-white text-stone-900 shadow-sm font-semibold'
+                      : 'text-white/85 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* 3. Right: "Начать путь" Frosted Pill Button with Circular White Arrow */}
+          <div className="hidden sm:flex items-center">
+            <button
+              onClick={onContactClick}
+              className="group flex items-center gap-2.5 sm:gap-3 pl-5 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2 rounded-full bg-white/[0.14] hover:bg-white/[0.22] active:scale-95 backdrop-blur-xl border border-white/25 text-white font-medium text-xs sm:text-[13.5px] transition-all duration-200 cursor-pointer shadow-lg shadow-black/15"
+            >
+              <span>Начать путь</span>
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-stone-900 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-0.5 shadow-sm">
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />
+              </div>
+            </button>
+          </div>
+
+          {/* Mobile Actions */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={onContactClick}
+              className="sm:hidden px-3.5 py-1.5 rounded-full bg-white text-stone-900 font-semibold text-[11px] shadow-sm"
+            >
+              Начать
+            </button>
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="p-2 rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-md cursor-pointer"
               aria-label="Открыть меню"
             >
-              <Menu className="w-5 h-5 text-white transition-transform group-hover:scale-110" />
-              <span className="hidden sm:inline text-xs tracking-wider uppercase font-medium text-white/95">
-                Меню
-              </span>
+              <Menu className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Center: Olgica Logo */}
-          <div className="flex items-center justify-center">
-            <button
-              onClick={() => onNavClick('home')}
-              className="cursor-pointer group focus:outline-none p-1"
-              aria-label="Ольгица Божинович"
-            >
-              <OlgicaLogo className="h-8 sm:h-10 lg:h-12 w-auto" />
-            </button>
-          </div>
-
-          {/* Right Side: Contact pill button */}
-          <div className="flex items-center justify-end">
-            <button
-              id="nav-contact-btn"
-              onClick={onContactClick}
-              className="rounded-full border border-white/40 hover:border-white bg-white/[0.12] hover:bg-white/[0.22] active:scale-95 transition-all duration-200 px-5 sm:px-7 py-1.5 sm:py-2 text-xs sm:text-[13px] lg:text-[14px] text-white font-normal cursor-pointer backdrop-blur-xl shadow-lg shadow-black/25"
-            >
-              Консультация
-            </button>
-          </div>
         </div>
       </header>
 
-      {/* Slide-over Drawer Menu - Elegant Light / White Porcelain Theme */}
-      {menuOpen && (
+      {/* Mobile Drawer Menu */}
+      {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 z-50 flex"
+          className="fixed inset-0 z-50 flex md:hidden"
           aria-modal="true"
           role="dialog"
         >
-          {/* Subtle Ambient Backdrop */}
           <div 
-            onClick={() => setMenuOpen(false)}
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+            onClick={() => setMobileMenuOpen(false)}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
           />
 
-          {/* Side Drawer Panel - Pure White / Warm Ivory Theme */}
-          <div 
-            id="side-drawer-menu"
-            className="relative w-full max-w-sm sm:max-w-md bg-white/95 backdrop-blur-2xl border-r border-stone-200/80 h-full p-6 sm:p-8 flex flex-col justify-between text-stone-900 shadow-2xl shadow-stone-900/15 z-10 animate-in slide-in-from-left duration-300"
-          >
-            {/* Drawer Header */}
+          <div className="relative w-4/5 max-w-xs bg-stone-900/95 backdrop-blur-2xl border-r border-white/15 h-full p-6 flex flex-col justify-between text-white z-10">
             <div>
-              <div className="flex items-center justify-between pb-6 border-b border-stone-200">
-                <div className="flex items-center gap-3">
-                  <OlgicaLogo className="h-7 w-auto" theme="light" />
-                </div>
+              <div className="flex items-center justify-between pb-5 border-b border-white/15">
+                <OlgicaLogo className="h-7 w-auto" theme="dark" />
                 <button
-                  onClick={() => setMenuOpen(false)}
-                  className="p-2 rounded-full border border-stone-200 bg-stone-100/80 hover:bg-stone-200/80 text-stone-700 hover:text-stone-900 transition-colors cursor-pointer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-1.5 rounded-full border border-white/20 text-white/80 hover:text-white"
                   aria-label="Закрыть меню"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-5 h-5" />
                 </button>
               </div>
 
-              {/* Navigation Items */}
-              <nav className="mt-8 space-y-2">
-                {menuItems.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => handleItemClick(item.id)}
-                      className="w-full flex items-center gap-4 p-3.5 rounded-2xl border border-transparent hover:border-stone-200 hover:bg-stone-50 transition-all text-left group cursor-pointer"
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-700 group-hover:bg-amber-500 group-hover:text-white transition-colors flex-shrink-0 shadow-sm">
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium text-stone-900 group-hover:text-amber-900">
-                          {item.label}
-                        </div>
-                        <div className="text-xs text-stone-500 group-hover:text-stone-700">
-                          {item.desc}
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </nav>
+              <div className="mt-6 flex flex-col gap-2">
+                {navLinks.map((link) => (
+                  <button
+                    key={link.id}
+                    onClick={() => handleTabClick(link.id)}
+                    className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                      activeTab === link.id
+                        ? 'bg-white text-stone-900 font-semibold'
+                        : 'text-white/80 hover:bg-white/10 hover:text-white'
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Drawer Footer Contact Info & Socials */}
-            <div className="pt-6 border-t border-stone-200 space-y-4 text-xs text-stone-600">
-              {/* Social Media Links (moved into menu on mobile/tablet) */}
-              <div>
-                <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block mb-2.5">
-                  Социальные сети
-                </span>
-                <div className="flex items-center gap-2.5">
-                  <a
-                    href={OLGICA_DATA.socials.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Instagram"
-                    title="Instagram"
-                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-[#E4405F] hover:border-[#E4405F] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
-                  >
-                    <InstagramIcon className="w-4 h-4" />
-                  </a>
-                  <a
-                    href={OLGICA_DATA.socials.tiktok}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="TikTok"
-                    title="TikTok"
-                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-black hover:border-black text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
-                  >
-                    <TikTokIcon className="w-4 h-4" />
-                  </a>
-                  <a
-                    href={OLGICA_DATA.socials.odnoklassniki}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Одноклассники"
-                    title="Одноклассники"
-                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-[#EE8208] hover:border-[#EE8208] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
-                  >
-                    <OKIcon className="w-4 h-4" />
-                  </a>
-                  <a
-                    href={OLGICA_DATA.socials.telegram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Telegram"
-                    title="Telegram"
-                    className="w-9 h-9 rounded-full border border-stone-200 bg-stone-100 hover:bg-[#2AABEE] hover:border-[#2AABEE] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer"
-                  >
-                    <TelegramIcon className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-
-              <div className="space-y-2.5 pt-2 border-t border-stone-150">
-                <a 
-                  href={`tel:${OLGICA_DATA.phone}`}
-                  className="flex items-center gap-2.5 text-stone-800 hover:text-amber-800 transition-colors font-medium"
-                >
-                  <Phone className="w-3.5 h-3.5 text-amber-600" />
-                  <span>{OLGICA_DATA.displayPhone}</span>
-                </a>
-                <div className="flex items-center gap-2.5">
-                  <MapPin className="w-3.5 h-3.5 text-amber-600" />
-                  <span className="text-stone-700">Белград, Сербия · Онлайн-консультации</span>
-                </div>
-              </div>
-
+            <div className="pt-6 border-t border-white/15">
               <button
                 onClick={() => {
-                  setMenuOpen(false);
+                  setMobileMenuOpen(false);
                   onContactClick();
                 }}
-                className="w-full mt-3 rounded-full border border-stone-900 bg-stone-900 hover:bg-stone-800 py-3 text-xs text-white font-medium transition-all shadow-md hover:shadow-lg cursor-pointer"
+                className="w-full py-3 rounded-xl bg-white text-stone-900 font-semibold text-sm flex items-center justify-center gap-2"
               >
-                Записаться на консультацию
+                <span>Начать свой путь</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
-
           </div>
         </div>
       )}
