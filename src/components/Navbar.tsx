@@ -11,7 +11,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onNavigateSection
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Обо мне', id: 'about' },
+    { name: 'Симптомы', id: 'symptoms' },
     { name: 'Программы', id: 'programs' },
     { name: 'Отзывы', id: 'reviews' },
     { name: 'Блог', id: 'blog' },

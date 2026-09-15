@@ -100,7 +100,7 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
               <Reveal delay={50} y={15}>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-[#D8EFEB] text-[10.5px] sm:text-[11.5px] font-medium uppercase tracking-wider mb-2">
                   <Sparkles className="w-3 h-3 text-amber-300" />
-                  <span>Обо мне &middot; Подход и понимание</span>
+                  <span>Симптомы &middot; Подход и понимание</span>
                 </div>
               </Reveal>
 

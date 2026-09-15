@@ -11,32 +11,42 @@ export const ConfidentalNavbar: React.FC<ConfidentalNavbarProps> = ({
   onContactClick,
   onNavClick,
 }) => {
-  const [activeTab, setActiveTab] = useState<'home' | 'about' | 'services' | 'reviews' | 'contact'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'symptoms' | 'services' | 'reviews' | 'blog' | 'contact'>('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks: Array<{ id: 'home' | 'about' | 'services' | 'reviews' | 'contact'; label: string }> = [
+  const navLinks: Array<{ id: 'home' | 'symptoms' | 'reviews' | 'services' | 'blog' | 'contact'; label: string }> = [
     { id: 'home', label: 'Главная' },
-    { id: 'about', label: 'Обо мне' },
-    { id: 'services', label: 'Программы' },
+    { id: 'symptoms', label: 'Симптомы' },
     { id: 'reviews', label: 'Отзывы' },
+    { id: 'services', label: 'Программы' },
+    { id: 'blog', label: 'Блог' },
     { id: 'contact', label: 'Контакты' },
   ];
 
-  const handleTabClick = (tab: 'home' | 'about' | 'services' | 'reviews' | 'contact') => {
+  const handleTabClick = (tab: 'home' | 'symptoms' | 'reviews' | 'services' | 'blog' | 'contact') => {
     setActiveTab(tab);
     setMobileMenuOpen(false);
 
     if (tab === 'home') {
       onNavClick('home');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (tab === 'about') {
-      onNavClick('methods');
+    } else if (tab === 'symptoms') {
+      onNavClick('symptoms');
       const el = document.getElementById('can-you-relate-section');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else if (tab === 'reviews') {
+      onNavClick('reviews');
+      const el = document.getElementById('testimonials-section');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     } else if (tab === 'services') {
       onNavClick('products');
-    } else if (tab === 'reviews') {
-      const el = document.getElementById('testimonials-section');
+      const el = document.getElementById('section-4-cta') || document.getElementById('elevate-health-cta');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else if (tab === 'blog') {
+      onNavClick('blog');
+      const el = document.getElementById('blog-section');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     } else if (tab === 'contact') {
       onContactClick();

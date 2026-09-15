@@ -277,10 +277,10 @@ export const CtaBannerSection: React.FC<CtaBannerSectionProps> = ({
 
       </div>
 
-      {/* Bottom Footer */}
-      <div className="w-full max-w-[1440px] mx-auto pt-3 pb-2 flex flex-col sm:flex-row items-center justify-between text-stone-500 text-[11px] sm:text-xs gap-2 border-t border-stone-200/80 mt-4">
-        <p>© {new Date().getFullYear()} {OLGICA_DATA.name}. Все права защищены.</p>
-        <p className="text-stone-500 font-light">{OLGICA_DATA.tagline}</p>
+      {/* Bottom Guarantee / Trust Note */}
+      <div className="w-full max-w-[1440px] mx-auto pt-3 pb-1 flex flex-col sm:flex-row items-center justify-between text-stone-500 text-[11px] sm:text-xs gap-2 border-t border-stone-200/80 mt-4">
+        <p className="text-stone-600 font-medium">Безопасные протоколы на основе натуропатии и доказательной нутрициологии</p>
+        <p className="text-stone-500 font-light">Поддержка и ведение на каждом этапе оздоровления</p>
       </div>
     </section>
   );
