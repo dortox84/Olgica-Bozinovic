@@ -26,7 +26,7 @@ export const OLGICA_DATA = {
   displayPhone: "+381 63 103 4201",
   website: "https://bozinovicolgica.rs/",
   socials: {
-    instagram: "https://www.instagram.com/bozinovic.olgica/",
+    instagram: "https://www.instagram.com/bozinovic.olgica?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==",
     instagramHandle: "@bozinovic.olgica",
     tiktok: "https://www.tiktok.com/@bozinovic.olgica",
     tiktokHandle: "@bozinovic.olgica",

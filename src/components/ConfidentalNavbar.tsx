@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { OlgicaLogo } from './OlgicaLogo';
 import { Menu, X, ArrowRight } from 'lucide-react';
+import { VKIcon, TelegramIcon, TikTokIcon, InstagramIcon } from './SocialIcons';
 
 interface ConfidentalNavbarProps {
   onContactClick: () => void;
@@ -21,6 +22,29 @@ export const ConfidentalNavbar: React.FC<ConfidentalNavbarProps> = ({
     { id: 'services', label: 'Программы' },
     { id: 'blog', label: 'Блог' },
     { id: 'contact', label: 'Контакты' },
+  ];
+
+  const socialLinks = [
+    {
+      name: 'VKontakte',
+      href: 'https://vk.com',
+      icon: <VKIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />,
+    },
+    {
+      name: 'Telegram',
+      href: 'https://t.me/OlgaHealthBot',
+      icon: <TelegramIcon className="w-[18px] h-[18px] sm:w-[21px] sm:h-[21px]" />,
+    },
+    {
+      name: 'TikTok',
+      href: 'https://www.tiktok.com/@bozinovic.olgica',
+      icon: <TikTokIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />,
+    },
+    {
+      name: 'Instagram',
+      href: 'https://www.instagram.com/bozinovic.olgica?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==',
+      icon: <InstagramIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />,
+    },
   ];
 
   const handleTabClick = (tab: 'home' | 'symptoms' | 'reviews' | 'services' | 'blog' | 'contact') => {
@@ -56,9 +80,9 @@ export const ConfidentalNavbar: React.FC<ConfidentalNavbarProps> = ({
   return (
     <>
       <header className="w-full relative z-30 pt-5 sm:pt-7 lg:pt-8 px-5 sm:px-8 lg:px-14 xl:px-16">
-        <div className="max-w-[1720px] mx-auto flex items-center justify-between">
+        <div className="max-w-[1720px] mx-auto flex items-center justify-between gap-4">
           
-          {/* 1. Left: Brand Logo (Left untouched as instructed) */}
+          {/* 1. Left: Brand Logo (Left untouched) */}
           <div className="flex items-center">
             <button
               onClick={() => handleTabClick('home')}
@@ -69,40 +93,66 @@ export const ConfidentalNavbar: React.FC<ConfidentalNavbarProps> = ({
             </button>
           </div>
 
-          {/* 2. Center: Floating Frosted Pill Menu in Russian */}
+          {/* 2. Center: Floating Frosted Pill Menu with Links + Separator + Moved CTA Button */}
           <nav 
             className="hidden md:flex items-center bg-white/[0.14] hover:bg-white/[0.18] backdrop-blur-xl border border-white/20 rounded-full p-1.5 shadow-lg shadow-black/15 transition-all duration-300"
             aria-label="Основная навигация"
           >
-            {navLinks.map((link) => {
-              const isActive = activeTab === link.id;
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => handleTabClick(link.id)}
-                  className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-[13px] font-medium transition-all duration-200 cursor-pointer ${
-                    isActive
-                      ? 'bg-white text-stone-900 shadow-sm font-semibold'
-                      : 'text-white/85 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {link.label}
-                </button>
-              );
-            })}
-          </nav>
+            {/* Navigation links */}
+            <div className="flex items-center">
+              {navLinks.map((link) => {
+                const isActive = activeTab === link.id;
+                return (
+                  <button
+                    key={link.id}
+                    onClick={() => handleTabClick(link.id)}
+                    className={`px-3 lg:px-4 py-1.5 sm:py-2 rounded-full text-xs lg:text-[13px] font-medium transition-all duration-200 cursor-pointer ${
+                      isActive
+                        ? 'bg-white text-stone-900 shadow-sm font-semibold'
+                        : 'text-white/85 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                );
+              })}
+            </div>
 
-          {/* 3. Right: "Начать путь" Frosted Pill Button with Circular White Arrow */}
-          <div className="hidden sm:flex items-center">
+            {/* Subtle Divider separating Links from CTA */}
+            <div className="w-px h-5 bg-white/25 mx-1 lg:mx-1.5 flex-shrink-0" aria-hidden="true" />
+
+            {/* Moved CTA Button inside Menu */}
             <button
               onClick={onContactClick}
-              className="group flex items-center gap-2.5 sm:gap-3 pl-5 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2 rounded-full bg-white/[0.14] hover:bg-white/[0.22] active:scale-95 backdrop-blur-xl border border-white/25 text-white font-medium text-xs sm:text-[13.5px] transition-all duration-200 cursor-pointer shadow-lg shadow-black/15"
+              className="group flex items-center gap-2 pl-3.5 sm:pl-4 pr-1.5 sm:pr-2 py-1.5 rounded-full bg-white text-stone-900 hover:bg-stone-100 active:scale-95 text-xs lg:text-[13px] font-semibold transition-all duration-200 cursor-pointer shadow-md shadow-black/10 flex-shrink-0"
             >
               <span>Начать путь</span>
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-stone-900 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-0.5 shadow-sm">
-                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />
+              <div className="w-6 h-6 rounded-full bg-stone-900 text-white flex items-center justify-center transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-0.5 shadow-sm">
+                <ArrowRight className="w-3 h-3 stroke-[2.5]" />
               </div>
             </button>
+          </nav>
+
+          {/* 3. Right: Social Media Icons (VKontakte, Telegram, TikTok, Instagram) replacing CTA */}
+          <div className="hidden sm:flex items-center">
+            <div 
+              id="navbar-social-links"
+              className="flex items-center gap-1 sm:gap-1.5 bg-white/[0.14] hover:bg-white/[0.18] backdrop-blur-xl border border-white/20 rounded-full px-2.5 py-1.5 shadow-lg shadow-black/15 transition-all duration-300"
+            >
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                  title={social.name}
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/20 active:scale-90 transition-all duration-200 cursor-pointer"
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Mobile Actions */}
@@ -167,17 +217,35 @@ export const ConfidentalNavbar: React.FC<ConfidentalNavbarProps> = ({
               </div>
             </div>
 
-            <div className="pt-6 border-t border-white/15">
+            {/* Mobile Drawer Bottom: CTA Button & Social Icons */}
+            <div className="pt-6 border-t border-white/15 flex flex-col gap-4">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onContactClick();
                 }}
-                className="w-full py-3 rounded-xl bg-white text-stone-900 font-semibold text-sm flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-white text-stone-900 font-semibold text-sm flex items-center justify-center gap-2 shadow-md hover:bg-stone-100 transition-colors"
               >
                 <span>Начать свой путь</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
+
+              {/* Mobile Social Links Row */}
+              <div className="flex items-center justify-center gap-2.5 pt-1">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.name}
+                    title={social.name}
+                    className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/90 hover:text-white hover:bg-white/20 transition-colors"
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>

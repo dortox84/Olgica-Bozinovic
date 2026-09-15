@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { LotusIcon } from './LotusIcon';
+import { InstagramIcon, TikTokIcon } from './SocialIcons';
 import { Reveal } from './Reveal';
 
 interface ConfidentalHeroProps {
@@ -99,35 +100,82 @@ export const ConfidentalHero: React.FC<ConfidentalHeroProps> = ({
 
         </div>
 
-        {/* Bottom Bar: Social Proof (Avatars + "1 200+ Довольных клиентов") */}
+        {/* Bottom Bar: Social Proof (Avatars + "1 200+ Довольных клиентов" and frameless Instagram Stat) */}
         <div className="w-full pt-4 sm:pt-6">
           <Reveal delay={420} y={16}>
             <div 
               id="hero-client-proof"
-              className="inline-flex items-center gap-3.5 sm:gap-4"
+              className="flex flex-wrap items-center gap-5 sm:gap-7 lg:gap-8"
             >
-              {/* Overlapping Avatar Stack */}
-              <div className="flex items-center -space-x-2.5 sm:-space-x-3">
-                {clientAvatars.map((avatar, idx) => (
-                  <img
-                    key={avatar.name}
-                    src={avatar.src}
-                    alt={avatar.name}
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-white shadow-md shadow-black/25"
-                    style={{ zIndex: 10 - idx }}
-                  />
-                ))}
+              {/* 1. Overlapping Avatar Stack & Happy Clients */}
+              <div className="inline-flex items-center gap-3 sm:gap-3.5">
+                <div className="flex items-center -space-x-2.5 sm:-space-x-3">
+                  {clientAvatars.map((avatar, idx) => (
+                    <img
+                      key={avatar.name}
+                      src={avatar.src}
+                      alt={avatar.name}
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-white shadow-md shadow-black/25"
+                      style={{ zIndex: 10 - idx }}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex flex-col text-left">
+                  <span className="text-white font-bold text-sm sm:text-base tracking-tight leading-none drop-shadow-sm">
+                    1 200+
+                  </span>
+                  <span className="text-white/80 text-[11px] sm:text-xs font-light mt-1 leading-none drop-shadow-sm">
+                    Довольных клиентов
+                  </span>
+                </div>
               </div>
 
-              {/* Stat text: "1 200+" / "Довольных клиентов" */}
-              <div className="flex flex-col text-left">
-                <span className="text-white font-bold text-sm sm:text-base tracking-tight leading-none drop-shadow-sm">
-                  1 200+
-                </span>
-                <span className="text-white/80 text-[11px] sm:text-xs font-light mt-1 leading-none drop-shadow-sm">
-                  Довольных клиентов
-                </span>
-              </div>
+              {/* Subtle visual separator between avatar proof and Instagram proof */}
+              <div className="w-px h-7 bg-white/20 hidden sm:block" aria-hidden="true" />
+
+              {/* 2. Instagram Stat - 100% borderless, no background, frameless */}
+              <a
+                href="https://www.instagram.com/bozinovic.olgica?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
+                target="_blank"
+                rel="noopener noreferrer"
+                id="hero-instagram-stat"
+                className="inline-flex items-center gap-2.5 sm:gap-3 group cursor-pointer transition-transform hover:scale-[1.03] active:scale-95"
+                title="Instagram: 29 000+ подписчиков"
+              >
+                <InstagramIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-amber-200 transition-colors flex-shrink-0 drop-shadow-md" />
+                <div className="flex flex-col text-left">
+                  <span className="text-white font-bold text-sm sm:text-base tracking-tight leading-none drop-shadow-sm">
+                    29 000+
+                  </span>
+                  <span className="text-white/80 text-[11px] sm:text-xs font-light mt-1 leading-none drop-shadow-sm group-hover:text-white transition-colors">
+                    Подписчиков
+                  </span>
+                </div>
+              </a>
+
+              {/* Subtle visual separator between Instagram and TikTok */}
+              <div className="w-px h-7 bg-white/20 hidden sm:block" aria-hidden="true" />
+
+              {/* 3. TikTok Stat - 100% borderless, no background, frameless */}
+              <a
+                href="https://www.tiktok.com/@bozinovic.olgica"
+                target="_blank"
+                rel="noopener noreferrer"
+                id="hero-tiktok-stat"
+                className="inline-flex items-center gap-2.5 sm:gap-3 group cursor-pointer transition-transform hover:scale-[1.03] active:scale-95"
+                title="TikTok: 18 000+ подписчиков"
+              >
+                <TikTokIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-amber-200 transition-colors flex-shrink-0 drop-shadow-md" />
+                <div className="flex flex-col text-left">
+                  <span className="text-white font-bold text-sm sm:text-base tracking-tight leading-none drop-shadow-sm">
+                    18 000+
+                  </span>
+                  <span className="text-white/80 text-[11px] sm:text-xs font-light mt-1 leading-none drop-shadow-sm group-hover:text-white transition-colors">
+                    Подписчиков
+                  </span>
+                </div>
+              </a>
             </div>
           </Reveal>
         </div>
