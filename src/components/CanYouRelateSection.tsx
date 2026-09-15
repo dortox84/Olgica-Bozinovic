@@ -44,7 +44,7 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
     >
       {/* Background Split: On mobile/tablet, full-bleed #2C6E67. On desktop (lg+), Split Left White & Right #2C6E67 */}
       <div className="absolute inset-0 flex" aria-hidden="true">
-        {/* Left vertical white band - hidden on mobile/tablet so green goes edge-to-edge */}
+        {/* Left vertical white band - desktop only */}
         <div className="hidden lg:block w-[18%] xl:w-[20%] bg-white h-full flex-shrink-0" />
         {/* Deep sea-pine teal backdrop */}
         <div className="w-full lg:flex-1 bg-[#2C6E67] h-full" />
@@ -52,32 +52,24 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
 
       {/* Main Content Grid */}
       <div className="relative z-10 w-full max-w-[1720px] mx-auto px-5 sm:px-8 lg:px-14 xl:px-16 py-6 sm:py-8 lg:py-10 h-full flex items-center justify-center">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-14 items-center">
+        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 md:gap-7 lg:gap-10 xl:gap-14 items-center">
           
           {/* 
             =============================================================================
-            MANDATORY STRICT RESPONSIVE REQUIREMENT — SECTION "Знакомо ли вам это?":
-            -----------------------------------------------------------------------------
-            DESKTOP (lg+):
-              * Image is VISIBLE and fully part of the composition (`hidden lg:flex`).
-            TABLET (< lg) & MOBILE / PHONE (< sm):
-              * Image is COMPLETELY REMOVED from the layout flow using `hidden lg:flex`.
-              * Does NOT simply reduce its size.
-              * Does NOT make it transparent.
-              * Does NOT move it elsewhere.
-              * Does NOT place it below the text.
-              * Does NOT replace it with any placeholder.
-              * Occupies 0px of layout space on tablet and mobile.
-              * The text column below automatically reflows to use the entire freed width.
+            RESPONSIVE IMAGE DISPLAY:
+            - Desktop (lg+): Fully visible as part of the composition (taking 5 cols).
+            - Tablet (md to lg): VISIBLE side-by-side with text (taking 4 cols).
+            - Mobile / Phone (< md): Hidden (`hidden md:flex`) so text reflows
+              seamlessly and fits 100vh comfortably without vertical crowding.
             =============================================================================
           */}
-          <div className="hidden lg:flex lg:col-span-5 xl:col-span-5 justify-center lg:justify-start">
-            <Reveal delay={100} y={30} className="w-full flex justify-center lg:justify-start">
+          <div className="hidden md:flex md:col-span-4 lg:col-span-5 xl:col-span-5 justify-center md:justify-start">
+            <Reveal delay={100} y={30} className="w-full flex justify-center md:justify-start">
               <div 
                 id="relate-image-card"
-                className="relative w-full max-w-[420px] xl:max-w-[480px] aspect-square rounded-[32px] lg:rounded-[40px] overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-black/10 group transition-transform duration-500 hover:scale-[1.01] bg-[#1E4D48]"
+                className="relative w-full max-w-[280px] md:max-w-[320px] lg:max-w-[420px] xl:max-w-[480px] aspect-square rounded-[24px] md:rounded-[32px] lg:rounded-[40px] overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-black/10 group transition-transform duration-500 hover:scale-[1.01] bg-[#1E4D48]"
               >
-                {/* Portrait photo on desktop only */}
+                {/* Portrait photo (Visible on Tablet & Desktop) */}
                 <img
                   src="https://res.cloudinary.com/l4orv4yo/image/upload/v1789296600/4a71d565-05e6-469b-a690-0ba4ffed9f28_ioaikn.png"
                   alt="Ольгица Божинович"
@@ -86,7 +78,7 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
 
                 {/* Subtle border ring */}
                 <div 
-                  className="pointer-events-none absolute inset-0 rounded-[32px] lg:rounded-[40px] ring-1 ring-inset ring-white/15" 
+                  className="pointer-events-none absolute inset-0 rounded-[24px] md:rounded-[32px] lg:rounded-[40px] ring-1 ring-inset ring-white/15" 
                   aria-hidden="true" 
                 />
               </div>
@@ -95,13 +87,13 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
 
           {/* 
             =============================================================================
-            RESPONSIVE REFLOW COLUMN:
-            - On Tablet & Mobile: Takes 100% width (`col-span-1 max-w-2xl mx-auto`),
-              reflowing freely into the space vacated by the removed image.
-            - On Desktop: Takes 7 columns (`lg:col-span-7 xl:col-span-7`).
+            RESPONSIVE CONTENT COLUMN:
+            - On Mobile (< md): Takes 100% width, reflowing freely across the screen.
+            - On Tablet (md): Takes 8 cols next to the 4-col tablet image.
+            - On Desktop (lg): Takes 7 cols next to the 5-col desktop image.
             =============================================================================
           */}
-          <div className="col-span-1 lg:col-span-7 xl:col-span-7 w-full text-white lg:pl-4 xl:pl-8 flex flex-col justify-center">
+          <div className="col-span-1 md:col-span-8 lg:col-span-7 xl:col-span-7 w-full text-white md:pl-2 lg:pl-4 xl:pl-8 flex flex-col justify-center">
             
             {/* Header with pill tag */}
             <div className="mb-3 sm:mb-4 lg:mb-5">
@@ -114,7 +106,7 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
 
               <RevealText
                 lines={['Знакомо ли вам это?']}
-                className="font-serif-title text-2xl sm:text-3xl md:text-4xl lg:text-[42px] xl:text-[48px] font-normal italic tracking-tight text-white leading-[1.12]"
+                className="font-serif-title text-2xl sm:text-3xl md:text-3xl lg:text-[42px] xl:text-[48px] font-normal italic tracking-tight text-white leading-[1.12]"
               />
 
               <Reveal delay={150} y={15}>
@@ -149,7 +141,7 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
                     </div>
 
                     {/* Paragraph text */}
-                    <p className="text-[12px] sm:text-[13.5px] lg:text-[13px] xl:text-[13.5px] text-[#F0F7F5] group-hover:text-white leading-[1.5] sm:leading-[1.55] font-normal tracking-normal transition-colors max-w-2xl">
+                    <p className="text-[12px] sm:text-[13px] md:text-[12.5px] lg:text-[13px] xl:text-[13.5px] text-[#F0F7F5] group-hover:text-white leading-[1.5] sm:leading-[1.55] font-normal tracking-normal transition-colors max-w-2xl">
                       {point.text}
                     </p>
                   </div>

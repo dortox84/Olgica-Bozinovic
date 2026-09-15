@@ -69,8 +69,8 @@ export const ConfidentalHero: React.FC<ConfidentalHeroProps> = ({
             </h1>
           </div>
 
-          {/* Right Column: Paragraph and "Записаться на сессию" Button */}
-          <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start lg:items-start justify-end lg:pl-6 xl:pl-10 lg:pt-24 xl:pt-32">
+          {/* Right Column: Paragraph and "Записаться на сессию" Button - moved further down */}
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start justify-end lg:self-end lg:pl-6 xl:pl-10 mt-8 sm:mt-12 lg:mt-0 lg:pb-2 xl:pb-4 lg:translate-y-6 xl:translate-y-8">
             <Reveal delay={300} y={20}>
               <p 
                 id="hero-right-description"

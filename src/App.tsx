@@ -23,37 +23,6 @@ export default function App() {
     type: 'contact',
   });
 
-  /* 
-    =============================================================================
-    1. SCROLL PROGRESS TRACKING:
-    - Measures `window.scrollY` relative to `window.innerHeight` (vh).
-    - Calculates the active card index [0, 1, 2, 3] based on continuous scroll progress.
-    - Updates dynamically during mouse wheel, trackpad, and touch scrolling.
-    =============================================================================
-  */
-  const [activeCardIndex, setActiveCardIndex] = useState<number>(0);
-  const [scrollProgressPercent, setScrollProgressPercent] = useState<number>(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const vh = window.innerHeight;
-      const maxScroll = vh * 3; // 4 sections total = 3 scroll transitions
-      
-      // Calculate overall progress percentage (0% to 100%)
-      const progress = Math.min(100, Math.max(0, (scrollY / (maxScroll || 1)) * 100));
-      setScrollProgressPercent(Math.round(progress));
-
-      // Calculate which card is currently active / prominent in the viewport
-      const current = Math.min(3, Math.max(0, Math.floor((scrollY + vh * 0.45) / vh)));
-      setActiveCardIndex(current);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   /* Smooth scroll helper to navigate between presentation cards */
   const scrollToCard = (cardIndex: number) => {
     const vh = window.innerHeight;
@@ -99,63 +68,8 @@ export default function App() {
     setModalState((prev) => ({ ...prev, isOpen: false }));
   };
 
-  const cardLabels = [
-    { title: 'Главная', subtitle: 'Hero' },
-    { title: 'Обо мне', subtitle: 'Знакомо ли вам это?' },
-    { title: 'Отзывы', subtitle: 'Что говорят о нас' },
-    { title: 'Программа', subtitle: 'Путь к здоровью' },
-  ];
-
   return (
     <div className="relative w-full bg-[#121212] text-stone-900 selection:bg-amber-500/20 selection:text-stone-900">
-
-      {/* 
-        =============================================================================
-        FLOATING PRESENTATION CARD INDICATOR (DESKTOP & TABLET):
-        - Displays current card number (01 to 04).
-        - Allows direct click to slide to any section.
-        - Provides live visual feedback of continuous scroll progress.
-        =============================================================================
-      */}
-      <aside 
-        className="fixed right-3 sm:right-5 lg:right-7 top-1/2 -translate-y-1/2 z-50 hidden sm:flex flex-col items-center gap-3 bg-stone-950/60 backdrop-blur-xl border border-white/15 rounded-full px-2.5 py-4 shadow-2xl shadow-black/40"
-        aria-label="Навигация по слайдам"
-      >
-        <span className="text-[10px] font-bold tracking-widest text-white/90">
-          0{activeCardIndex + 1}
-        </span>
-
-        <div className="flex flex-col gap-2 my-1">
-          {cardLabels.map((card, idx) => {
-            const isActive = activeCardIndex === idx;
-            return (
-              <button
-                key={idx}
-                onClick={() => scrollToCard(idx)}
-                aria-label={`Перейти к разделу ${card.title}`}
-                className="group relative flex items-center justify-center p-1 cursor-pointer focus:outline-none"
-              >
-                <span 
-                  className={`block rounded-full transition-all duration-300 ${
-                    isActive
-                      ? 'w-2 h-6 bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]'
-                      : 'w-2 h-2 bg-white/35 group-hover:bg-white/70'
-                  }`} 
-                />
-                
-                {/* Tooltip on hover */}
-                <span className="pointer-events-none absolute right-full mr-3.5 px-2.5 py-1 rounded-md bg-stone-900/90 text-white text-[11px] font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg border border-white/10">
-                  {card.title}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        <span className="text-[9px] font-mono text-white/50">
-          04
-        </span>
-      </aside>
 
       {/* 
         =============================================================================
