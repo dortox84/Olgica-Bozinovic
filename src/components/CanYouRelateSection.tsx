@@ -67,13 +67,13 @@ export const CanYouRelateSection: React.FC<CanYouRelateSectionProps> = ({
             <Reveal delay={100} y={30} className="w-full flex justify-center md:justify-start">
               <div 
                 id="relate-image-card"
-                className="relative w-full max-w-[280px] md:max-w-[320px] lg:max-w-[420px] xl:max-w-[480px] aspect-square rounded-[24px] md:rounded-[32px] lg:rounded-[40px] overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-black/10 group transition-transform duration-500 hover:scale-[1.01] bg-[#1E4D48]"
+                className="relative w-full max-w-[290px] md:max-w-[340px] lg:max-w-[420px] xl:max-w-[460px] aspect-[9/16] max-h-[76vh] lg:max-h-[82vh] rounded-[24px] md:rounded-[32px] lg:rounded-[40px] overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-black/10 group transition-transform duration-500 hover:scale-[1.01] bg-[#1E4D48]"
               >
-                {/* Portrait photo (Visible on Tablet & Desktop) */}
+                {/* Portrait photo in 9:16 aspect ratio (Prominently enlarged, tall vertical format) */}
                 <img
                   src="https://res.cloudinary.com/l4orv4yo/image/upload/v1789296600/4a71d565-05e6-469b-a690-0ba4ffed9f28_ioaikn.png"
                   alt="Ольгица Божинович"
-                  className="w-full h-full aspect-square object-contain transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover object-[center_top] origin-top scale-[1.1] md:scale-[1.15] lg:scale-[1.2] transition-transform duration-700 group-hover:scale-[1.25]"
                 />
 
                 {/* Subtle border ring */}
