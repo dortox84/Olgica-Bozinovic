@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { RevealText } from './RevealText';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Reveal } from './Reveal';
-import { Sparkles, ArrowRight, BookOpen, Clock, ChevronDown, ChevronUp } from 'lucide-react';
+import { Sparkles, ArrowRight, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import { OLGICA_DATA } from '../data/bozinovicData';
-import type { Article } from '../types/article';
-import { fetchPublishedArticles } from '../lib/articles';
-import { BlogReaderModal } from './BlogReaderModal';
+import type { Article } from '../types/blog';
+import { getAllArticles } from '../data/blogArticlesData';
 
 interface BlogCardsSectionProps {
-  onCardClick?: (blogId: string) => void;
+  onCardClick?: (slug: string) => void;
   onExploreAllClick?: () => void;
   onConsultationClick?: () => void;
-  // Where the URL should return to when the reader closes. "/" on the
-  // homepage (where this section also lives), "/blog" on the standalone
-  // listing page.
   basePath?: string;
 }
 
@@ -23,24 +19,10 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
   onConsultationClick,
   basePath = '/',
 }) => {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const navigate = useNavigate();
+  const articles = getAllArticles();
   const [showAllArticles, setShowAllArticles] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('Все');
-
-  useEffect(() => {
-    let isMounted = true;
-    fetchPublishedArticles().then((data) => {
-      if (isMounted) {
-        setArticles(data);
-        setIsLoading(false);
-      }
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   const featuredPost = articles[0];
   const allOtherPosts = articles.slice(1);
@@ -56,20 +38,10 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
   const visibleCards = showAllArticles ? filteredPosts : filteredPosts.slice(0, 3);
 
   const handleOpenArticle = (article: Article) => {
-    setSelectedArticle(article);
-    // Give the article a real, shareable address without triggering a route
-    // change underneath it — the reader still opens as the same popup over
-    // whatever page it was clicked from.
-    if (typeof window !== 'undefined') {
-      window.history.pushState(null, '', `/blog/${article.slug}`);
-    }
-    if (onCardClick) onCardClick(article.id);
-  };
-
-  const handleCloseArticle = () => {
-    setSelectedArticle(null);
-    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/blog/')) {
-      window.history.pushState(null, '', basePath);
+    if (onCardClick) {
+      onCardClick(article.slug);
+    } else {
+      navigate(`/blog/${article.slug}`);
     }
   };
 
@@ -110,7 +82,7 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
                 key={cat}
                 type="button"
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
+                className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
                   selectedCategory === cat
                     ? 'bg-stone-900 text-white shadow-sm'
                     : 'bg-stone-100 hover:bg-stone-200 text-stone-600'
@@ -122,11 +94,7 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
           </div>
         </div>
 
-        {isLoading && (
-          <p className="text-sm text-stone-600 py-8 text-center">Загружаем статьи…</p>
-        )}
-
-        {!isLoading && articles.length === 0 && (
+        {articles.length === 0 && (
           <p className="text-sm text-stone-600 py-8 text-center">Скоро здесь появятся новые статьи.</p>
         )}
 
@@ -143,8 +111,9 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
                 {/* Featured Card Image (Left Column) */}
                 <div className="lg:col-span-6 overflow-hidden rounded-[18px] sm:rounded-[22px] aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/11] bg-stone-100 shadow-md shadow-stone-900/10">
                   <img
-                    src={featuredPost.image}
+                    src={featuredPost.cover_image}
                     alt={featuredPost.title}
+                    referrerPolicy="no-referrer"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                 </div>
@@ -159,7 +128,7 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
                       </span>
                       <span className="flex items-center gap-1 text-[11px] text-stone-600 font-medium">
                         <Clock className="w-3 h-3" />
-                        {featuredPost.readTime}
+                        {featuredPost.reading_time}
                       </span>
                     </div>
 
@@ -180,6 +149,7 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
                       <img
                         src={featuredPost.author.avatar}
                         alt={featuredPost.author.name}
+                        referrerPolicy="no-referrer"
                         className="w-7 h-7 rounded-full object-cover object-[center_top] ring-1 ring-stone-200 bg-[#2C6E67]"
                       />
                       <span className="text-[12px] sm:text-[12.5px] font-semibold text-stone-800">
@@ -189,10 +159,10 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
 
                     <div className="flex items-center gap-3">
                       <span className="text-[11px] sm:text-xs text-stone-600 font-medium hidden sm:inline">
-                        {featuredPost.date}
+                        {featuredPost.published_at}
                       </span>
                       <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#2C6E67] group-hover:underline">
-                        <span>Читать</span>
+                        <span>Читать статью</span>
                         <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
                       </span>
                     </div>
@@ -218,8 +188,9 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
                   {/* Top Image */}
                   <div className="w-full aspect-[16/10] overflow-hidden rounded-[14px] sm:rounded-[16px] bg-stone-100 shadow-sm mb-3">
                     <img
-                      src={card.image}
+                      src={card.cover_image}
                       alt={card.title}
+                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                   </div>
@@ -231,7 +202,7 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
                     </span>
                     <span className="text-[10.5px] text-stone-600 flex items-center gap-1">
                       <Clock className="w-3 h-3" />
-                      {card.readTime}
+                      {card.reading_time}
                     </span>
                   </div>
 
@@ -262,7 +233,7 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
               id="load-more-articles-btn"
               type="button"
               onClick={handleToggleShowAll}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-stone-900 hover:bg-[#2C6E67] text-white text-xs sm:text-[13px] font-medium shadow-md hover:shadow-lg transition-all duration-300 transform active:scale-95"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-stone-900 hover:bg-[#2C6E67] text-white text-xs sm:text-[13px] font-medium shadow-md hover:shadow-lg transition-all duration-300 transform active:scale-95 cursor-pointer"
             >
               <span>{showAllArticles ? 'Свернуть публикации' : 'Все публикации'}</span>
               {showAllArticles ? (
@@ -281,17 +252,6 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
         <p>© {new Date().getFullYear()} {OLGICA_DATA.name}. Все права защищены.</p>
         <p className="text-stone-600 font-light">{OLGICA_DATA.tagline}</p>
       </div>
-
-      {/* Interactive Article Reader Modal */}
-      <BlogReaderModal
-        article={selectedArticle}
-        isOpen={Boolean(selectedArticle)}
-        onClose={handleCloseArticle}
-        onConsultationClick={() => {
-          handleCloseArticle();
-          if (onConsultationClick) onConsultationClick();
-        }}
-      />
     </section>
   );
 };

@@ -13,11 +13,14 @@ import { BlogCardsSection } from './components/BlogCardsSection';
 import { CtaBannerSection } from './components/CtaBannerSection';
 import { ProgramDetailPage } from './components/ProgramDetailPage';
 import { BookingModal } from './components/BookingModal';
+import { BlogPostPage } from './components/blog/BlogPostPage';
+import { getArticleBySlug, getAllArticles } from './data/blogArticlesData';
 
 const HERO_BG_URL = 'https://res.cloudinary.com/l4orv4yo/image/upload/v1789260118/1e583dcc-88ab-40e0-a51b-9a7ca95b2ac6_tzzqd3.png';
 
 export default function App() {
   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(null);
+  const [selectedArticleSlug, setSelectedArticleSlug] = useState<string | null>(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingServiceTitle, setBookingServiceTitle] = useState('Программа здоровья');
 
@@ -77,6 +80,61 @@ export default function App() {
     setModalState((prev) => ({ ...prev, isOpen: false }));
     setSelectedProgramId(programId);
   };
+
+  const handleSelectArticle = (slugOrId: string) => {
+    const article = getArticleBySlug(slugOrId);
+    const targetSlug = article ? article.slug : slugOrId;
+    setSelectedArticleSlug(targetSlug);
+    try {
+      window.history.pushState({ slug: targetSlug }, '', `/blog/${targetSlug}`);
+    } catch (e) {
+      // Ignore
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBackFromArticle = () => {
+    setSelectedArticleSlug(null);
+    try {
+      window.history.pushState({}, '', '/');
+    } catch (e) {
+      // Ignore
+    }
+    setTimeout(() => {
+      scrollToCard(4);
+    }, 80);
+  };
+
+  // URL routing synchronization for /blog/[slug]
+  useEffect(() => {
+    const handleUrlSync = () => {
+      const pathname = window.location.pathname;
+      const search = window.location.search;
+      const params = new URLSearchParams(search);
+      const articleParam = params.get('article');
+
+      if (articleParam) {
+        setSelectedArticleSlug(articleParam);
+        return;
+      }
+
+      if (pathname.startsWith('/blog/')) {
+        const slug = pathname.replace('/blog/', '').replace(/\/$/, '');
+        if (slug) {
+          setSelectedArticleSlug(slug);
+          return;
+        }
+      }
+
+      if (pathname === '/' || pathname === '') {
+        setSelectedArticleSlug(null);
+      }
+    };
+
+    handleUrlSync();
+    window.addEventListener('popstate', handleUrlSync);
+    return () => window.removeEventListener('popstate', handleUrlSync);
+  }, []);
 
   const handleOpenSection = (section: string) => {
     if (section === 'home') {
@@ -247,6 +305,35 @@ export default function App() {
       clearTimeout(scrollTimer);
     };
   }, []);
+
+  if (selectedArticleSlug) {
+    const article = getArticleBySlug(selectedArticleSlug) || getAllArticles()[0];
+    return (
+      <div className="relative min-h-screen bg-[#fafaf9] text-stone-900">
+        <BlogPostPage
+          article={article}
+          onBack={handleBackFromArticle}
+          onSelectArticle={handleSelectArticle}
+          onConsultationClick={() => {
+            setBookingServiceTitle(`Консультация по теме: ${article.title}`);
+            setIsBookingOpen(true);
+          }}
+          onProgramsClick={() => {
+            handleBackFromArticle();
+            setTimeout(() => {
+              scrollToCard(3);
+            }, 80);
+          }}
+        />
+
+        <BookingModal
+          isOpen={isBookingOpen}
+          onClose={() => setIsBookingOpen(false)}
+          serviceTitle={bookingServiceTitle}
+        />
+      </div>
+    );
+  }
 
   if (selectedProgramId) {
     return (
@@ -461,6 +548,7 @@ export default function App() {
           className="snap-card sticky top-0 h-screen min-h-screen max-h-screen w-full z-50 overflow-hidden rounded-t-[28px] sm:rounded-t-[36px] lg:rounded-t-[44px] shadow-[0_-25px_60px_rgba(0,0,0,0.38)] border-t border-stone-200 bg-white"
         >
           <BlogCardsSection 
+            onCardClick={handleSelectArticle}
             onConsultationClick={handleOpenContact}
           />
         </div>
