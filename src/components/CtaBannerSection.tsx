@@ -7,11 +7,13 @@ import { Reveal } from './Reveal';
 interface CtaBannerSectionProps {
   onPrimaryClick?: () => void;
   onSecondaryClick?: () => void;
+  onSelectPlan?: (planId: string) => void;
 }
 
 export const CtaBannerSection: React.FC<CtaBannerSectionProps> = ({
   onPrimaryClick,
   onSecondaryClick,
+  onSelectPlan,
 }) => {
   const customerAvatars = [
     {
@@ -47,7 +49,7 @@ export const CtaBannerSection: React.FC<CtaBannerSectionProps> = ({
       tag: 'Starter',
       title: 'Старт: Детокс',
       description: 'Пошаговый целевой протокол очищения печени и быстрого возвращения энергии.',
-      price: '12 000 RSD',
+      price: '10 500 ₽',
       period: '/протокол',
       buttonText: 'Выбрать тариф',
       subtext: 'Быстрый старт',
@@ -65,7 +67,7 @@ export const CtaBannerSection: React.FC<CtaBannerSectionProps> = ({
       tag: 'Growth',
       title: 'Путь Здоровья',
       description: 'Персональное ведение при хронических состояниях, анализы и поддержка 24/7.',
-      price: '180 000 RSD',
+      price: '159 000 ₽',
       period: '/программа',
       buttonText: 'Начать программу',
       subtext: 'Флагманский курс',
@@ -84,7 +86,7 @@ export const CtaBannerSection: React.FC<CtaBannerSectionProps> = ({
       tag: 'Business',
       title: 'Семейное меню',
       description: 'Сбалансированный рацион для всей семьи, крепкий детский иммунитет и гармония.',
-      price: 'По запросу',
+      price: '24 500 ₽',
       period: '/месяц',
       buttonText: 'Записаться',
       subtext: 'Для всей семьи',
@@ -234,7 +236,19 @@ export const CtaBannerSection: React.FC<CtaBannerSectionProps> = ({
                     {/* Button & Subtext Row */}
                     <div className="mt-4 flex items-center gap-2.5">
                       <button
-                        onClick={onPrimaryClick}
+                        onClick={() => {
+                          if (plan.id === 'business') {
+                            if (onSelectPlan) {
+                              onSelectPlan('business');
+                            } else if (onSecondaryClick) {
+                              onSecondaryClick();
+                            }
+                          } else if (onSelectPlan) {
+                            onSelectPlan(plan.id);
+                          } else if (onPrimaryClick) {
+                            onPrimaryClick();
+                          }
+                        }}
                         className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer shadow-sm active:scale-95 flex items-center justify-center gap-1.5 ${
                           plan.highlighted
                             ? 'bg-emerald-700 hover:bg-emerald-800 text-white shadow-emerald-900/20'
@@ -242,11 +256,26 @@ export const CtaBannerSection: React.FC<CtaBannerSectionProps> = ({
                         }`}
                       >
                         <span>{plan.buttonText}</span>
+                        <ArrowRight className="w-3 h-3" />
                       </button>
 
-                      <span className="text-[11px] text-stone-500 font-normal">
-                        {plan.subtext}
-                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (plan.id === 'business') {
+                            if (onSelectPlan) {
+                              onSelectPlan('business');
+                            } else if (onSecondaryClick) {
+                              onSecondaryClick();
+                            }
+                          } else if (onSelectPlan) {
+                            onSelectPlan(plan.id);
+                          }
+                        }}
+                        className="text-[11px] text-stone-500 hover:text-stone-900 font-medium underline underline-offset-2 transition-colors cursor-pointer"
+                      >
+                        Подробнее
+                      </button>
                     </div>
                   </div>
 

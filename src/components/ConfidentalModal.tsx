@@ -6,13 +6,17 @@ import { OLGICA_DATA } from '../data/bozinovicData';
 interface ConfidentalModalProps {
   isOpen: boolean;
   onClose: () => void;
-  type: 'contact' | 'method' | 'products';
+  type: 'contact' | 'method' | 'products' | 'section';
+  sectionName?: string;
+  onSelectProgram?: (programId: string) => void;
 }
 
 export const ConfidentalModal: React.FC<ConfidentalModalProps> = ({
   isOpen,
   onClose,
   type,
+  sectionName,
+  onSelectProgram,
 }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -78,14 +82,16 @@ export const ConfidentalModal: React.FC<ConfidentalModalProps> = ({
                 <div className="flex items-center gap-2.5 mb-2">
                   <OlgicaLogo className="h-6 w-auto" theme="light" />
                   <span className="text-xs uppercase tracking-wider text-amber-700 font-semibold">
-                    Связаться с нами
+                    {sectionName ? 'Заявка на тариф' : 'Связаться с нами'}
                   </span>
                 </div>
                 <h3 className="font-display text-2xl sm:text-3xl font-normal text-stone-900">
-                  Оставить заявку
+                  {sectionName || 'Оставить заявку'}
                 </h3>
                 <p className="text-xs sm:text-sm text-stone-600 font-light mt-1.5 leading-relaxed">
-                  Запишитесь на первичную ознакомительную консультацию или задайте любой вопрос.
+                  {sectionName
+                    ? 'Заполните контактные данные для бронирования места на тарифе. Мы свяжемся с вами в течение 24 часов.'
+                    : 'Запишитесь на первичную ознакомительную консультацию или задайте любой вопрос.'}
                 </p>
 
                 <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -215,23 +221,37 @@ export const ConfidentalModal: React.FC<ConfidentalModalProps> = ({
 
             <div className="mt-6 space-y-3 max-h-[50vh] overflow-y-auto pr-1">
               {OLGICA_DATA.programs.map((program) => (
-                <div key={program.id} className="p-4 rounded-2xl bg-stone-50 hover:bg-amber-50/60 border border-stone-200 transition-colors flex items-center justify-between gap-3">
+                <div 
+                  key={program.id} 
+                  onClick={() => {
+                    onClose();
+                    if (onSelectProgram) {
+                      onSelectProgram(program.id);
+                    }
+                  }}
+                  className="p-4 rounded-2xl bg-stone-50 hover:bg-emerald-50/70 border border-stone-200 hover:border-emerald-300 transition-all flex items-center justify-between gap-3 cursor-pointer group"
+                >
                   <div>
-                    <span className="text-[10px] font-semibold text-amber-800 uppercase tracking-wider block">
+                    <span className="text-[10px] font-semibold text-emerald-800 uppercase tracking-wider block">
                       {program.category}
                     </span>
-                    <h4 className="text-sm font-semibold text-stone-900 mt-0.5">
+                    <h4 className="text-sm font-semibold text-stone-900 group-hover:text-[#2C6E67] transition-colors mt-0.5">
                       {program.title}
                     </h4>
                     <p className="text-xs text-stone-600 font-light mt-0.5">
                       {program.duration} &middot; {program.features[0]}
                     </p>
                   </div>
-                  {program.price && (
-                    <span className="text-xs font-semibold text-stone-900 bg-white border border-stone-200 px-3 py-1 rounded-full shadow-xs whitespace-nowrap">
-                      {program.price}
+                  <div className="flex items-center gap-2">
+                    {program.price && (
+                      <span className="text-xs font-semibold text-stone-900 bg-white border border-stone-200 px-3 py-1 rounded-full shadow-xs whitespace-nowrap">
+                        {program.price}
+                      </span>
+                    )}
+                    <span className="text-xs text-emerald-700 font-medium hidden sm:inline group-hover:translate-x-0.5 transition-transform">
+                      →
                     </span>
-                  )}
+                  </div>
                 </div>
               ))}
             </div>

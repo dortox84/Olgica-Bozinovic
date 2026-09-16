@@ -11,10 +11,16 @@ import { CanYouRelateSection } from './components/CanYouRelateSection';
 import { ImpactResultsSection } from './components/ImpactResultsSection';
 import { BlogCardsSection } from './components/BlogCardsSection';
 import { CtaBannerSection } from './components/CtaBannerSection';
+import { ProgramDetailPage } from './components/ProgramDetailPage';
+import { BookingModal } from './components/BookingModal';
 
 const HERO_BG_URL = 'https://res.cloudinary.com/l4orv4yo/image/upload/v1789260118/1e583dcc-88ab-40e0-a51b-9a7ca95b2ac6_tzzqd3.png';
 
 export default function App() {
+  const [selectedProgramId, setSelectedProgramId] = useState<string | null>(null);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [bookingServiceTitle, setBookingServiceTitle] = useState('Программа здоровья');
+
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
     type: 'contact' | 'products' | 'section';
@@ -42,12 +48,34 @@ export default function App() {
     }, 750);
   };
 
-  const handleOpenContact = () => {
-    setModalState({ isOpen: true, type: 'contact' });
+  const handleOpenContact = (subject?: string) => {
+    setModalState({ 
+      isOpen: true, 
+      type: 'contact', 
+      sectionName: typeof subject === 'string' ? subject : undefined 
+    });
   };
 
   const handleOpenProducts = () => {
-    setModalState({ isOpen: true, type: 'products' });
+    // When user chooses or clicks plan action, dismiss modal and smoothly scroll to plans section
+    setModalState((prev) => ({ ...prev, isOpen: false }));
+    scrollToCard(3);
+  };
+
+  const handleSelectProgram = (programId: string) => {
+    // If user selects Business / Family plan, directly open the contact form instead of course page
+    if (programId === 'business' || programId === 'za-porodicu') {
+      setSelectedProgramId(null);
+      setModalState({ 
+        isOpen: true, 
+        type: 'contact', 
+        sectionName: 'Семейное меню — Здоровье для всей семьи' 
+      });
+      return;
+    }
+    // Hide modal and open dedicated program detail page
+    setModalState((prev) => ({ ...prev, isOpen: false }));
+    setSelectedProgramId(programId);
   };
 
   const handleOpenSection = (section: string) => {
@@ -220,6 +248,44 @@ export default function App() {
     };
   }, []);
 
+  if (selectedProgramId) {
+    return (
+      <div className="relative min-h-screen bg-[#fafcfb] text-stone-900">
+        <ProgramDetailPage
+          programId={selectedProgramId}
+          onBack={() => {
+            setSelectedProgramId(null);
+            setTimeout(() => {
+              scrollToCard(3);
+            }, 60);
+          }}
+          onBookNow={(title) => {
+            setBookingServiceTitle(title);
+            setIsBookingOpen(true);
+          }}
+          onSelectOtherProgram={(newId) => {
+            if (newId === 'business' || newId === 'za-porodicu') {
+              setSelectedProgramId(null);
+              setModalState({
+                isOpen: true,
+                type: 'contact',
+                sectionName: 'Семейное меню — Здоровье для всей семьи',
+              });
+              return;
+            }
+            setSelectedProgramId(newId);
+          }}
+        />
+
+        <BookingModal
+          isOpen={isBookingOpen}
+          onClose={() => setIsBookingOpen(false)}
+          serviceTitle={bookingServiceTitle}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full bg-[#121212] text-stone-900 selection:bg-amber-500/20 selection:text-stone-900">
 
@@ -375,8 +441,9 @@ export default function App() {
           className="snap-card sticky top-0 h-screen min-h-screen max-h-screen w-full z-40 overflow-hidden rounded-t-[28px] sm:rounded-t-[36px] lg:rounded-t-[44px] shadow-[0_-25px_60px_rgba(0,0,0,0.45)] border-t border-stone-200 bg-[#f8faf9]"
         >
           <CtaBannerSection 
-            onPrimaryClick={handleOpenProducts}
+            onPrimaryClick={() => handleSelectProgram('growth')}
             onSecondaryClick={handleOpenContact}
+            onSelectPlan={handleSelectProgram}
           />
         </div>
 
@@ -406,6 +473,13 @@ export default function App() {
         type={modalState.type}
         sectionName={modalState.sectionName}
         onClose={handleCloseModal}
+        onSelectProgram={handleSelectProgram}
+      />
+
+      <BookingModal
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+        serviceTitle={bookingServiceTitle}
       />
 
     </div>

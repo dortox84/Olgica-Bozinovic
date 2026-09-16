@@ -1,28 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RevealText } from './RevealText';
 import { Reveal } from './Reveal';
 import { Sparkles, ArrowRight, BookOpen, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import { OLGICA_DATA } from '../data/bozinovicData';
-import { BLOG_ARTICLES, BlogArticle } from '../data/blogArticles';
+import type { Article } from '../types/article';
+import { fetchPublishedArticles } from '../lib/articles';
 import { BlogReaderModal } from './BlogReaderModal';
 
 interface BlogCardsSectionProps {
   onCardClick?: (blogId: string) => void;
   onExploreAllClick?: () => void;
   onConsultationClick?: () => void;
+  // Where the URL should return to when the reader closes. "/" on the
+  // homepage (where this section also lives), "/blog" on the standalone
+  // listing page.
+  basePath?: string;
 }
 
 export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
   onCardClick,
   onExploreAllClick,
   onConsultationClick,
+  basePath = '/',
 }) => {
-  const [selectedArticle, setSelectedArticle] = useState<BlogArticle | null>(null);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [showAllArticles, setShowAllArticles] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('Все');
 
-  const featuredPost = BLOG_ARTICLES[0];
-  const allOtherPosts = BLOG_ARTICLES.slice(1);
+  useEffect(() => {
+    let isMounted = true;
+    fetchPublishedArticles().then((data) => {
+      if (isMounted) {
+        setArticles(data);
+        setIsLoading(false);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const featuredPost = articles[0];
+  const allOtherPosts = articles.slice(1);
 
   const categories = ['Все', 'Нутрициология и детокс', 'Протоколы', 'Фитотерапия', 'Метаболизм', 'Лимфодренаж', 'Эндокринология'];
 
@@ -34,9 +55,22 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
   // Display either first 3 cards or all cards based on toggle
   const visibleCards = showAllArticles ? filteredPosts : filteredPosts.slice(0, 3);
 
-  const handleOpenArticle = (article: BlogArticle) => {
+  const handleOpenArticle = (article: Article) => {
     setSelectedArticle(article);
+    // Give the article a real, shareable address without triggering a route
+    // change underneath it — the reader still opens as the same popup over
+    // whatever page it was clicked from.
+    if (typeof window !== 'undefined') {
+      window.history.pushState(null, '', `/blog/${article.slug}`);
+    }
     if (onCardClick) onCardClick(article.id);
+  };
+
+  const handleCloseArticle = () => {
+    setSelectedArticle(null);
+    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/blog/')) {
+      window.history.pushState(null, '', basePath);
+    }
   };
 
   const handleToggleShowAll = () => {
@@ -47,7 +81,7 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
   return (
     <section
       id="blog-section"
-      /* 
+      /*
         =============================================================================
         SECTION: ПОЛЕЗНЫЕ СТАТЬИ И БЛОГ (VISUAL INSIGHTS TO RESTORE HEALTH)
         - flex-col ensures header, articles grid, and footer stack cleanly!
@@ -57,7 +91,7 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
       className="relative w-full h-full min-h-screen max-h-screen bg-white text-stone-900 py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-12 xl:px-16 flex flex-col justify-between overflow-y-auto"
     >
       <div className="w-full max-w-[1240px] mx-auto my-auto flex-1 flex flex-col justify-center py-2 sm:py-4">
-        
+
         {/* Header Title: matching "Visual insights to sell homes faster" with italic accent */}
         <div className="mb-4 sm:mb-6 flex flex-col md:flex-row md:items-end justify-between gap-3">
           <Reveal delay={60} y={15}>
@@ -88,8 +122,16 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
           </div>
         </div>
 
+        {isLoading && (
+          <p className="text-sm text-stone-600 py-8 text-center">Загружаем статьи…</p>
+        )}
+
+        {!isLoading && articles.length === 0 && (
+          <p className="text-sm text-stone-600 py-8 text-center">Скоро здесь появятся новые статьи.</p>
+        )}
+
         {/* Featured Main Card (Horizontal Split Layout as in reference image) */}
-        {(selectedCategory === 'Все' || featuredPost.category === selectedCategory) && (
+        {featuredPost && (selectedCategory === 'Все' || featuredPost.category === selectedCategory) && (
           <Reveal delay={120} y={20}>
             <div
               id="featured-blog-card"
@@ -97,7 +139,7 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
               className="group relative bg-white rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] p-3.5 sm:p-5 lg:p-6 border border-stone-200/90 shadow-lg shadow-stone-900/5 hover:border-stone-300 hover:shadow-xl transition-all duration-300 cursor-pointer mb-4 sm:mb-5"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
-                
+
                 {/* Featured Card Image (Left Column) */}
                 <div className="lg:col-span-6 overflow-hidden rounded-[18px] sm:rounded-[22px] aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/11] bg-stone-100 shadow-md shadow-stone-900/10">
                   <img
@@ -197,7 +239,7 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
                   <h4 className="text-[13px] sm:text-sm lg:text-[15px] font-bold text-stone-900 leading-snug tracking-tight group-hover:text-[#2C6E67] transition-colors duration-200 line-clamp-2">
                     {card.title}
                   </h4>
-                  
+
                   {/* Excerpt */}
                   <p className="text-[11.5px] sm:text-xs text-stone-600 line-clamp-2 mt-1.5 leading-relaxed font-normal">
                     {card.excerpt}
@@ -244,9 +286,9 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
       <BlogReaderModal
         article={selectedArticle}
         isOpen={Boolean(selectedArticle)}
-        onClose={() => setSelectedArticle(null)}
+        onClose={handleCloseArticle}
         onConsultationClick={() => {
-          setSelectedArticle(null);
+          handleCloseArticle();
           if (onConsultationClick) onConsultationClick();
         }}
       />

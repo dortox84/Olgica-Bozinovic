@@ -81,7 +81,7 @@ export const ConfidentalHero: React.FC<ConfidentalHeroProps> = ({
               </p>
             </Reveal>
 
-            {/* High-Contrast Pill Button: "Записаться на сессию" with Black Circular Arrow Button */}
+            {/* High-Contrast Pill Button: "Выберите свой план" with Black Circular Arrow Button */}
             <Reveal delay={360} y={20}>
               <div className="mt-6 sm:mt-8">
                 <button
@@ -89,7 +89,7 @@ export const ConfidentalHero: React.FC<ConfidentalHeroProps> = ({
                   onClick={onExploreProducts}
                   className="group inline-flex items-center gap-3.5 sm:gap-4 pl-6 sm:pl-7 pr-2 sm:pr-2.5 py-2.5 sm:py-3 rounded-full bg-white text-stone-900 hover:bg-stone-50 active:scale-95 transition-all duration-300 shadow-2xl shadow-black/35 cursor-pointer font-medium text-xs sm:text-[14px]"
                 >
-                  <span className="tracking-tight font-semibold text-stone-900">Записаться на сессию</span>
+                  <span className="tracking-tight font-semibold text-stone-900">Выберите свой план</span>
                   <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#18181b] text-white flex items-center justify-center transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-0.5 shadow-sm">
                     <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
                   </div>
