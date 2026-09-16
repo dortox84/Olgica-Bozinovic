@@ -64,7 +64,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({
               {/* Primary Featured Cover Image */}
               <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm border border-stone-200/90 bg-stone-100 aspect-[16/10] mb-8">
                 <img
-                  src={article.cover_image}
+                  src={article.cover_image || (article as any).image}
                   alt={article.title}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
@@ -72,7 +72,10 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({
               </div>
 
               {/* Dynamic Semantic Content Blocks */}
-              <ArticleContent blocks={article.blocks} />
+              <ArticleContent
+                blocks={article.blocks || (article as any).content}
+                onConsultationClick={onConsultationClick}
+              />
 
               {/* Article Final Call To Action */}
               <ArticleCTA

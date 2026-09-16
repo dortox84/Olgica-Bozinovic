@@ -8,26 +8,65 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { BlogPostPage } from '../components/blog/BlogPostPage';
 import { BookingModal } from '../components/BookingModal';
 import { getArticleBySlug, getAllArticles } from '../data/blogArticlesData';
+import { fetchArticleBySlug } from '../lib/articles';
 
 export default function BlogArticlePage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingServiceTitle, setBookingServiceTitle] = useState('Консультация');
+  const [article, setArticle] = useState<any>(() => (slug ? getArticleBySlug(slug) : null));
+  const [isLoading, setIsLoading] = useState(!article);
 
-  const article = slug ? getArticleBySlug(slug) : null;
+  useEffect(() => {
+    if (!slug) return;
+    let isMounted = true;
+
+    const local = getArticleBySlug(slug);
+    if (local && isMounted) {
+      setArticle(local);
+    }
+
+    fetchArticleBySlug(slug)
+      .then((live) => {
+        if (isMounted) {
+          if (live) {
+            setArticle(live);
+          }
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [slug]);
 
   useEffect(() => {
     if (!article) return;
     document.title = `${article.title} — Ольгица Божинович`;
     const meta = document.querySelector('meta[name="description"]');
-    if (meta && article.meta_description) {
-      meta.setAttribute('content', article.meta_description);
+    if (meta && (article.meta_description || article.seoDescription || article.excerpt)) {
+      meta.setAttribute('content', article.meta_description || article.seoDescription || article.excerpt);
     }
     return () => {
       document.title = 'Olgica Božinović — Put Zdravlja';
     };
   }, [article]);
+
+  if (isLoading && !article) {
+    return (
+      <div className="min-h-screen bg-[#fafaf9] flex items-center justify-center p-6">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-2 border-[#2C6E67] border-t-transparent animate-spin" />
+          <span className="text-xs text-stone-500 font-medium">Загрузка статьи...</span>
+        </div>
+      </div>
+    );
+  }
 
   if (!article) {
     return (

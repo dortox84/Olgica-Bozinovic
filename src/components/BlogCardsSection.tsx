@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Reveal } from './Reveal';
 import { Sparkles, ArrowRight, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import { OLGICA_DATA } from '../data/bozinovicData';
 import type { Article } from '../types/blog';
 import { getAllArticles } from '../data/blogArticlesData';
+import { fetchPublishedArticles } from '../lib/articles';
 
 interface BlogCardsSectionProps {
   onCardClick?: (slug: string) => void;
@@ -20,9 +21,28 @@ export const BlogCardsSection: React.FC<BlogCardsSectionProps> = ({
   basePath = '/',
 }) => {
   const navigate = useNavigate();
-  const articles = getAllArticles();
+  const [articles, setArticles] = useState<Article[]>(() => getAllArticles());
   const [showAllArticles, setShowAllArticles] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('Все');
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchPublishedArticles()
+      .then((liveArticles) => {
+        if (isMounted && liveArticles && liveArticles.length > 0) {
+          const liveSlugs = new Set(liveArticles.map((a: any) => a.slug));
+          const fallbacks = getAllArticles().filter((a: any) => !liveSlugs.has(a.slug));
+          setArticles([...(liveArticles as unknown as Article[]), ...fallbacks]);
+        }
+      })
+      .catch((err) => {
+        console.warn('Could not fetch published articles:', err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const featuredPost = articles[0];
   const allOtherPosts = articles.slice(1);

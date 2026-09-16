@@ -11,14 +11,17 @@
 // visual components.
 
 export type ContentBlock =
-  | { type: 'paragraph'; text: string }
-  | { type: 'heading'; level: 2 | 3 | 4; text: string }
-  | { type: 'quote'; text: string }
-  | { type: 'image'; url: string; alt: string; caption?: string }
-  | { type: 'unordered_list'; items: string[] }
-  | { type: 'ordered_list'; items: string[] }
-  | { type: 'divider' }
-  | { type: 'callout'; variant?: 'lead' | 'tip'; text: string };
+  | { type: 'paragraph'; text?: string; [key: string]: any }
+  | { type: 'heading'; level?: number; text?: string; [key: string]: any }
+  | { type: 'subheading'; text?: string; [key: string]: any }
+  | { type: 'quote'; text?: string; author?: string; citation?: string; [key: string]: any }
+  | { type: 'image'; url?: string; src?: string; alt?: string; caption?: string; [key: string]: any }
+  | { type: 'unordered_list' | 'bullet_list' | 'list'; items?: any[]; [key: string]: any }
+  | { type: 'ordered_list' | 'numbered_list'; items?: any[]; [key: string]: any }
+  | { type: 'divider' | 'separator'; [key: string]: any }
+  | { type: 'callout' | 'inset'; variant?: string; title?: string; text?: string; [key: string]: any }
+  | { type: 'cta'; title?: string; text?: string; button_text?: string; url?: string; [key: string]: any }
+  | { type: string; [key: string]: any };
 
 export interface ArticleAuthor {
   name: string;

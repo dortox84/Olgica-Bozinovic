@@ -15,12 +15,15 @@ import { ProgramDetailPage } from './components/ProgramDetailPage';
 import { BookingModal } from './components/BookingModal';
 import { BlogPostPage } from './components/blog/BlogPostPage';
 import { getArticleBySlug, getAllArticles } from './data/blogArticlesData';
+import { fetchArticleBySlug } from './lib/articles';
 
 const HERO_BG_URL = 'https://res.cloudinary.com/l4orv4yo/image/upload/v1789260118/1e583dcc-88ab-40e0-a51b-9a7ca95b2ac6_tzzqd3.png';
 
 export default function App() {
   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(null);
   const [selectedArticleSlug, setSelectedArticleSlug] = useState<string | null>(null);
+  const [activeArticle, setActiveArticle] = useState<any>(null);
+  const [isArticleLoading, setIsArticleLoading] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingServiceTitle, setBookingServiceTitle] = useState('Программа здоровья');
 
@@ -135,6 +138,46 @@ export default function App() {
     window.addEventListener('popstate', handleUrlSync);
     return () => window.removeEventListener('popstate', handleUrlSync);
   }, []);
+
+  // Fetch article data from Supabase when selectedArticleSlug changes
+  useEffect(() => {
+    if (!selectedArticleSlug) {
+      setActiveArticle(null);
+      setIsArticleLoading(false);
+      return;
+    }
+
+    let isMounted = true;
+    const local = getArticleBySlug(selectedArticleSlug);
+    if (local) {
+      setActiveArticle(local);
+    } else {
+      setIsArticleLoading(true);
+    }
+
+    fetchArticleBySlug(selectedArticleSlug)
+      .then((live) => {
+        if (isMounted) {
+          if (live) {
+            setActiveArticle(live);
+          } else if (!local) {
+            setActiveArticle(getAllArticles()[0]);
+          }
+          setIsArticleLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.warn('Could not load article from Supabase:', err);
+        if (isMounted) {
+          if (!local) setActiveArticle(getAllArticles()[0]);
+          setIsArticleLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedArticleSlug]);
 
   const handleOpenSection = (section: string) => {
     if (section === 'home') {
@@ -307,7 +350,18 @@ export default function App() {
   }, []);
 
   if (selectedArticleSlug) {
-    const article = getArticleBySlug(selectedArticleSlug) || getAllArticles()[0];
+    if (isArticleLoading && !activeArticle) {
+      return (
+        <div className="min-h-screen bg-[#fafaf9] flex items-center justify-center p-6">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-8 h-8 rounded-full border-2 border-[#2C6E67] border-t-transparent animate-spin" />
+            <span className="text-xs text-stone-500 font-medium">Загрузка статьи...</span>
+          </div>
+        </div>
+      );
+    }
+
+    const article = activeArticle || getArticleBySlug(selectedArticleSlug) || getAllArticles()[0];
     return (
       <div className="relative min-h-screen bg-[#fafaf9] text-stone-900">
         <BlogPostPage

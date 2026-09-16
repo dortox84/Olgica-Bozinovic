@@ -33,7 +33,7 @@ export const ArticleSidebar: React.FC<ArticleSidebarProps> = ({
 
         {/* Key Takeaways list */}
         <div className="space-y-3 pt-1">
-          {article.key_takeaways.map((takeaway, idx) => (
+          {(article.key_takeaways || []).map((takeaway, idx) => (
             <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-[13px] text-stone-700 leading-relaxed">
               <span className="w-4 h-4 rounded-full bg-emerald-100 text-[#2C6E67] flex items-center justify-center flex-shrink-0 mt-0.5 text-[10px] font-bold">
                 ✓

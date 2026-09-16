@@ -42,25 +42,83 @@ interface ArticleRow {
   authors: { name: string; avatar_url: string | null; bio: string | null } | null;
 }
 
-function mapRow(row: ArticleRow): Article {
+function extractKeyTakeaways(row: ArticleRow): string[] {
+  if (Array.isArray((row as any).key_takeaways) && (row as any).key_takeaways.length > 0) {
+    return (row as any).key_takeaways;
+  }
+  if (Array.isArray(row.content)) {
+    for (const b of row.content) {
+      const bType = String((b as any).type || '').toLowerCase();
+      if (
+        (bType === 'unordered_list' || bType === 'ordered_list' || bType === 'list' || bType === 'bullet_list') &&
+        Array.isArray((b as any).items) &&
+        (b as any).items.length >= 2
+      ) {
+        return (b as any).items.slice(0, 4).map((it: any) =>
+          typeof it === 'string' ? it.replace(/[;.]+$/, '').trim() : ((it.text || it.title || '') as string).replace(/[;.]+$/, '').trim()
+        );
+      }
+    }
+  }
+  return [
+    'Роль печени в метаболизме и детоксикации',
+    'Влияние рациона и режима на восстановление энергии',
+    'Практические ежедневные привычки для здоровья печени',
+  ];
+}
+
+function cleanBlocks(blocks: any[], articleTitle?: string): any[] {
+  if (!Array.isArray(blocks)) return [];
+  return blocks.filter((b) => {
+    const text = String(b?.text || b?.content || b?.title || '').trim();
+    if (text.includes('Как поддержать печень: питание, энергия и здоровые привычкиКак поддержать печень')) {
+      return false;
+    }
+    // Also strip redundant heading if it just duplicates the main article hero title
+    if (
+      b?.type === 'heading' &&
+      articleTitle &&
+      text.toLowerCase().replace(/\s+/g, ' ') === articleTitle.toLowerCase().replace(/\s+/g, ' ')
+    ) {
+      return false;
+    }
+    return true;
+  });
+}
+
+function mapRow(row: ArticleRow): any {
+  const dateStr = formatRuDate(row.published_at);
+  const readTimeStr = formatReadTime(row.reading_time);
+  const blocks = cleanBlocks(row.content ?? [], row.title);
+
   return {
     id: row.id,
     slug: row.slug,
-    category: row.categories?.name ?? '',
+    category: row.categories?.name ?? 'Нутрициология и детокс',
     title: row.title,
     excerpt: row.excerpt ?? '',
-    readTime: formatReadTime(row.reading_time),
-    date: formatRuDate(row.published_at),
+    readTime: readTimeStr,
+    reading_time: readTimeStr,
+    date: dateStr,
+    published_at: dateStr,
     image: row.cover_image ?? '',
+    cover_image: row.cover_image ?? '',
     seoTitle: row.seo_title || row.title,
     seoDescription: row.seo_description || row.excerpt || '',
+    meta_title: row.seo_title || row.title,
+    meta_description: row.seo_description || row.excerpt || '',
     ogImage: row.og_image || row.cover_image || '',
+    og_image: row.og_image || row.cover_image || '',
     author: {
-      name: row.authors?.name ?? '',
-      role: row.authors?.bio ?? '',
-      avatar: row.authors?.avatar_url ?? '',
+      name: row.authors?.name || 'Ольгица Божинович',
+      role: row.authors?.bio || 'Инженер биотехнологии · Нутрициолог · Сертифицированный коуч',
+      bio: row.authors?.bio || 'Инженер биотехнологии · Нутрициолог · Сертифицированный коуч',
+      avatar: row.authors?.avatar_url || 'https://res.cloudinary.com/l4orv4yo/image/upload/v1789296600/4a71d565-05e6-469b-a690-0ba4ffed9f28_ioaikn.png',
+      avatar_url: row.authors?.avatar_url || 'https://res.cloudinary.com/l4orv4yo/image/upload/v1789296600/4a71d565-05e6-469b-a690-0ba4ffed9f28_ioaikn.png',
     },
-    content: row.content ?? [],
+    content: blocks,
+    blocks: blocks,
+    key_takeaways: extractKeyTakeaways(row),
   };
 }
 
